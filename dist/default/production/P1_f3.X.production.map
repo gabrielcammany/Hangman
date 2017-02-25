@@ -1,0 +1,116 @@
+MPLINK 5.08, LINKER
+Linker Map File - Created Fri Feb 24 19:30:09 2017
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000004
+                   .cinit    romdata   0x000004    program   0x000002
+                   .org_1       code   0x000008    program   0x000004
+                   .org_2       code   0x000018    program   0x000742
+.config_300001_BUILD/DEFAULT/PRODUCTION/MAIN.O    romdata   0x300001    program   0x000001
+.config_300003_BUILD/DEFAULT/PRODUCTION/MAIN.O    romdata   0x300003    program   0x000001
+.config_300005_BUILD/DEFAULT/PRODUCTION/MAIN.O    romdata   0x300005    program   0x000001
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000005      
+                            0x000008    0x00000b      
+                            0x000018    0x000759      
+                            0x300001    0x300001      
+                            0x300003    0x300003      
+                            0x300005    0x300005      
+            1871 out of 8472 program addresses used, program memory utilization is 22%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+             ACTIVA_VSYNC   0x000046    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+          COMPRUEBA_FINAL   0x000060    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+            COMPRUEBA_LOW   0x000072    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                 ESPERA_5   0x000748    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+               ESPERA_DEU   0x00074c    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                ESPERA_IH   0x00072e    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+             ESPERA_IVARS   0x000732    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                ESPERA_PM   0x00073a    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+               FINAL_SYNC   0x000048    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                 HIGH_INT   0x00001a    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+            HI_INT_VECTOR   0x000008    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+          INCREMENTA_HIGH   0x00005c    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+               INIT_PORTS   0x00008a    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+               INIT_TIMER   0x000092    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                INIT_VARS   0x000082    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+              LINEA_ZONA1   0x0006b0    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                     LOOP   0x0000f6    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+           LOW_INT_VECTOR   0x000018    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                     MAIN   0x0000ae    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                  PRIMERA   0x0000ba    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+            PRIMERA_MITAD   0x00003a    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+              RESET_TIMER   0x0000a2    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+             RESET_VECTOR   0x000000    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                  SEGUNDA   0x00010c    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+            ZONA10_ZONA11   0x000124    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+            ZONA11_ZONA12   0x000130    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+              ZONA8_ZONA9   0x000114    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+             ZONA9_ZONA10   0x00011c    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                  ZONA_10   0x0001c4    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                  ZONA_11   0x00013c    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                   ZONA_2   0x000634    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                   ZONA_3   0x0005a6    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                   ZONA_4   0x000528    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                   ZONA_5   0x00049c    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                   ZONA_6   0x0003fc    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                   ZONA_7   0x000378    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                   ZONA_8   0x0002f2    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                   ZONA_9   0x00025a    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+             RESET_VECTOR   0x000000    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+            HI_INT_VECTOR   0x000008    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+           LOW_INT_VECTOR   0x000018    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                 HIGH_INT   0x00001a    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+            PRIMERA_MITAD   0x00003a    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+             ACTIVA_VSYNC   0x000046    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+               FINAL_SYNC   0x000048    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+          INCREMENTA_HIGH   0x00005c    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+          COMPRUEBA_FINAL   0x000060    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+            COMPRUEBA_LOW   0x000072    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                INIT_VARS   0x000082    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+               INIT_PORTS   0x00008a    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+               INIT_TIMER   0x000092    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+              RESET_TIMER   0x0000a2    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                     MAIN   0x0000ae    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                  PRIMERA   0x0000ba    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                     LOOP   0x0000f6    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                  SEGUNDA   0x00010c    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+              ZONA8_ZONA9   0x000114    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+             ZONA9_ZONA10   0x00011c    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+            ZONA10_ZONA11   0x000124    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+            ZONA11_ZONA12   0x000130    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                  ZONA_11   0x00013c    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                  ZONA_10   0x0001c4    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                   ZONA_9   0x00025a    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                   ZONA_8   0x0002f2    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                   ZONA_7   0x000378    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                   ZONA_6   0x0003fc    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                   ZONA_5   0x00049c    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                   ZONA_4   0x000528    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                   ZONA_3   0x0005a6    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                   ZONA_2   0x000634    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+              LINEA_ZONA1   0x0006b0    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                ESPERA_IH   0x00072e    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+             ESPERA_IVARS   0x000732    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                ESPERA_PM   0x00073a    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+                 ESPERA_5   0x000748    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+               ESPERA_DEU   0x00074c    program     static C:\Users\gabriel53\Google Drive\Universitat\3er\Compus\Compus_Practica 1\Fase 3\Projecte\P1_f3.X\main.asm
+
+
