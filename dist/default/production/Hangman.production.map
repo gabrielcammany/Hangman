@@ -1,0 +1,128 @@
+MPLINK 5.08, LINKER
+Linker Map File - Created Tue Feb 28 19:57:39 2017
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000004
+                   .cinit    romdata   0x000004    program   0x000002
+                   .org_1       code   0x000008    program   0x000004
+                   .org_2       code   0x000018    program   0x000a3a
+.config_300001_BUILD/DEFAULT/PRODUCTION/MAIN.O    romdata   0x300001    program   0x000001
+.config_300003_BUILD/DEFAULT/PRODUCTION/MAIN.O    romdata   0x300003    program   0x000001
+.config_300005_BUILD/DEFAULT/PRODUCTION/MAIN.O    romdata   0x300005    program   0x000001
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000005      
+                            0x000008    0x00000b      
+                            0x000018    0x000a51      
+                            0x300001    0x300001      
+                            0x300003    0x300003      
+                            0x300005    0x300005      
+            2631 out of 8472 program addresses used, program memory utilization is 31%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+             ACTIVA_VSYNC   0x000046    program     static C:\Users\gabriel53\git\Hangman\main.asm
+          COMPRUEBA_FINAL   0x000060    program     static C:\Users\gabriel53\git\Hangman\main.asm
+            COMPRUEBA_LOW   0x000072    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                 ESPERA_5   0x000a40    program     static C:\Users\gabriel53\git\Hangman\main.asm
+               ESPERA_DEU   0x000a44    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                ESPERA_IH   0x000a26    program     static C:\Users\gabriel53\git\Hangman\main.asm
+             ESPERA_IVARS   0x000a2a    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                ESPERA_PM   0x000a32    program     static C:\Users\gabriel53\git\Hangman\main.asm
+               FINAL_SYNC   0x000048    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                 HIGH_INT   0x00001a    program     static C:\Users\gabriel53\git\Hangman\main.asm
+            HI_INT_VECTOR   0x000008    program     static C:\Users\gabriel53\git\Hangman\main.asm
+          INCREMENTA_HIGH   0x00005c    program     static C:\Users\gabriel53\git\Hangman\main.asm
+               INIT_PORTS   0x00008a    program     static C:\Users\gabriel53\git\Hangman\main.asm
+               INIT_TIMER   0x000096    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                INIT_VARS   0x000082    program     static C:\Users\gabriel53\git\Hangman\main.asm
+              LINEA_ZONA1   0x0009a8    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                     LOOP   0x0000fa    program     static C:\Users\gabriel53\git\Hangman\main.asm
+           LOW_INT_VECTOR   0x000018    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                     MAIN   0x0000b2    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                  PRIMERA   0x0000be    program     static C:\Users\gabriel53\git\Hangman\main.asm
+            PRIMERA_MITAD   0x00003a    program     static C:\Users\gabriel53\git\Hangman\main.asm
+              RESET_TIMER   0x0000a6    program     static C:\Users\gabriel53\git\Hangman\main.asm
+             RESET_VECTOR   0x000000    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                  SEGUNDA   0x000112    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                  TERCERA   0x000146    program     static C:\Users\gabriel53\git\Hangman\main.asm
+            ZONA10_ZONA11   0x00012a    program     static C:\Users\gabriel53\git\Hangman\main.asm
+            ZONA11_ZONA12   0x000132    program     static C:\Users\gabriel53\git\Hangman\main.asm
+            ZONA13_ZONA14   0x00013a    program     static C:\Users\gabriel53\git\Hangman\main.asm
+              ZONA8_ZONA9   0x00011a    program     static C:\Users\gabriel53\git\Hangman\main.asm
+             ZONA9_ZONA10   0x000122    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                  ZONA_10   0x0004a4    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                  ZONA_11   0x000418    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                  ZONA_12   0x000394    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                  ZONA_13   0x0002d6    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                  ZONA_14   0x000220    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                  ZONA_15   0x000162    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                   ZONA_2   0x00092c    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                   ZONA_3   0x00089e    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                   ZONA_4   0x000820    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                   ZONA_5   0x000794    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                   ZONA_6   0x0006f4    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                   ZONA_7   0x000666    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                   ZONA_8   0x0005dc    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                   ZONA_9   0x00053a    program     static C:\Users\gabriel53\git\Hangman\main.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+             RESET_VECTOR   0x000000    program     static C:\Users\gabriel53\git\Hangman\main.asm
+            HI_INT_VECTOR   0x000008    program     static C:\Users\gabriel53\git\Hangman\main.asm
+           LOW_INT_VECTOR   0x000018    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                 HIGH_INT   0x00001a    program     static C:\Users\gabriel53\git\Hangman\main.asm
+            PRIMERA_MITAD   0x00003a    program     static C:\Users\gabriel53\git\Hangman\main.asm
+             ACTIVA_VSYNC   0x000046    program     static C:\Users\gabriel53\git\Hangman\main.asm
+               FINAL_SYNC   0x000048    program     static C:\Users\gabriel53\git\Hangman\main.asm
+          INCREMENTA_HIGH   0x00005c    program     static C:\Users\gabriel53\git\Hangman\main.asm
+          COMPRUEBA_FINAL   0x000060    program     static C:\Users\gabriel53\git\Hangman\main.asm
+            COMPRUEBA_LOW   0x000072    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                INIT_VARS   0x000082    program     static C:\Users\gabriel53\git\Hangman\main.asm
+               INIT_PORTS   0x00008a    program     static C:\Users\gabriel53\git\Hangman\main.asm
+               INIT_TIMER   0x000096    program     static C:\Users\gabriel53\git\Hangman\main.asm
+              RESET_TIMER   0x0000a6    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                     MAIN   0x0000b2    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                  PRIMERA   0x0000be    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                     LOOP   0x0000fa    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                  SEGUNDA   0x000112    program     static C:\Users\gabriel53\git\Hangman\main.asm
+              ZONA8_ZONA9   0x00011a    program     static C:\Users\gabriel53\git\Hangman\main.asm
+             ZONA9_ZONA10   0x000122    program     static C:\Users\gabriel53\git\Hangman\main.asm
+            ZONA10_ZONA11   0x00012a    program     static C:\Users\gabriel53\git\Hangman\main.asm
+            ZONA11_ZONA12   0x000132    program     static C:\Users\gabriel53\git\Hangman\main.asm
+            ZONA13_ZONA14   0x00013a    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                  TERCERA   0x000146    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                  ZONA_15   0x000162    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                  ZONA_14   0x000220    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                  ZONA_13   0x0002d6    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                  ZONA_12   0x000394    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                  ZONA_11   0x000418    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                  ZONA_10   0x0004a4    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                   ZONA_9   0x00053a    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                   ZONA_8   0x0005dc    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                   ZONA_7   0x000666    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                   ZONA_6   0x0006f4    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                   ZONA_5   0x000794    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                   ZONA_4   0x000820    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                   ZONA_3   0x00089e    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                   ZONA_2   0x00092c    program     static C:\Users\gabriel53\git\Hangman\main.asm
+              LINEA_ZONA1   0x0009a8    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                ESPERA_IH   0x000a26    program     static C:\Users\gabriel53\git\Hangman\main.asm
+             ESPERA_IVARS   0x000a2a    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                ESPERA_PM   0x000a32    program     static C:\Users\gabriel53\git\Hangman\main.asm
+                 ESPERA_5   0x000a40    program     static C:\Users\gabriel53\git\Hangman\main.asm
+               ESPERA_DEU   0x000a44    program     static C:\Users\gabriel53\git\Hangman\main.asm
+
+

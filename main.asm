@@ -14,8 +14,7 @@ CONFIG	WDT = OFF
 
 LINIASL  EQU 0x01
 LINIASH  EQU 0x02
-ESPLINEA EQU 0X03
-COLOR EQU 0x03 ;variable la cual modificamos segun queremos un color o otro
+COLOR EQU 0x04 ;variable la cual modificamos segun queremos un color o otro
 
 ;*************
 ;* CONSTANTS *
@@ -116,13 +115,15 @@ COMPRUEBA_LOW
 INIT_VARS
     clrf LINIASL, 0;1
     clrf LINIASH, 0;1
-    clrf ESPLINEA,0;1
+    NOP
     return;2
     
 INIT_PORTS
     clrf TRISA, 0
     movlw 0x08
     movwf TRISE, 0
+    setf TRISC, 0
+    setf TRISD, 0
     return
     
 INIT_TIMER
@@ -189,8 +190,9 @@ LOOP
     movlw 0x01
     cpfsgt LINIASH,0
     goto SEGUNDA
-    clrf LATA, 0
+    goto TERCERA
     goto LOOP
+    
     
 SEGUNDA
     movlw 0x2F ;Final Zona 7
@@ -211,66 +213,349 @@ ZONA10_ZONA11
     movlw 0xA5 ;Final zona 10
     cpfsgt LINIASL,0
     goto ZONA_10   
-    goto LOOP
     
 ZONA11_ZONA12
-    movlw 0xBF ;Final zona 11
-    cpfslt LINIASL,0
+    movlw 0xB6 ;Final zona 11
+    cpfsgt LINIASL,0
     goto ZONA_11
-    goto LOOP     
 
-ZONA_11
-    movlw 0x03
+ZONA13_ZONA14
+    movlw 0xF5 ;Final zona 11
+    cpfslt LINIASL,0
+    goto ZONA_12
+    goto LOOP 
+
+
+TERCERA
+    movlw 0x2F ;Final Zona 7
+    cpfsgt LINIASL,0
+    goto ZONA_13
+    movlw 0x3B ;Final Zona 7
+    cpfsgt LINIASL,0
+    goto ZONA_14
+    movlw 0x75 ;Final Zona 7
+    cpfsgt LINIASL,0
+    goto ZONA_15
+    goto LOOP
+
+ZONA_15
+    NOP
+    NOP
+    movlw 0x07
+    call ESPERA_DEU
+    call ESPERA_5
+    call ESPERA_5
+    call ESPERA_5
+    call ESPERA_5
+    NOP
+    NOP
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_5
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_5
+    NOP
     movwf LATA,0
+    NOP
+    NOP
+    NOP
+    NOP
     clrf LATA,0 
+    NOP
+    call ESPERA_5
     call ESPERA_DEU
     call ESPERA_DEU
+    call ESPERA_5
     NOP
-    NOP
-    movlw 0x03
     movwf LATA,0
+    NOP
+    NOP
+    NOP
+    NOP
     clrf LATA,0 
-    call ESPERA_5
     NOP
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
     call ESPERA_5
     NOP
     NOP
-    call ESPERA_5
-    call ESPERA_DEU
-    call ESPERA_DEU
+    NOP
     NOP
     NOP
     NOP
     NOP
     NOP
     call ESPERA_5
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
+    NOP
     call ESPERA_5
+    call ESPERA_5
+    NOP
+    NOP
+    movwf LATA,0
+    NOP
+    NOP
+    NOP
+    NOP
+    clrf LATA,0 
+    NOP
+    call ESPERA_DEU
+    NOP
+    call ESPERA_5
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
     goto LOOP    
     
+ZONA_14
+    NOP
+    movlw 0x07
+    call ESPERA_DEU
+    call ESPERA_5
+    call ESPERA_5
+    call ESPERA_5
+    call ESPERA_5
+    call ESPERA_5
+    NOP
+    NOP
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_5
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_5
+    NOP
+    movwf LATA,0
+    NOP
+    NOP
+    NOP
+    NOP
+    clrf LATA,0 
+    NOP
+    call ESPERA_5
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_5
+    NOP
+    movwf LATA,0
+    NOP
+    NOP
+    NOP
+    NOP
+    clrf LATA,0 
+    NOP
+    call ESPERA_5
+    
+    
+    movwf LATA,0
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    call ESPERA_5
+    NOP
+    call ESPERA_5
+    call ESPERA_5
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    clrf LATA,0 
+    NOP
+    call ESPERA_DEU
+    call ESPERA_DEU
+    NOP
+    NOP
+    NOP
+    goto LOOP
+    
+    
+ZONA_13
+    NOP
+    NOP
+    movlw 0x03
+    call ESPERA_DEU
+    call ESPERA_5
+    call ESPERA_5
+    call ESPERA_5
+    call ESPERA_5
+    call ESPERA_5
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_5
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_5
+    NOP
+    movwf LATA,0
+    NOP
+    NOP
+    NOP
+    NOP
+    clrf LATA,0 
+    NOP
+    call ESPERA_5
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_5
+    NOP
+    movwf LATA,0
+    NOP
+    NOP
+    NOP
+    NOP
+    clrf LATA,0 
+    NOP
+    call ESPERA_5
+    
+    
+    movwf LATA,0
+    NOP
+    NOP
+    NOP
+    NOP
+    clrf LATA,0 
+    NOP
+    NOP
+    call ESPERA_5
+    NOP
+    call ESPERA_5
+    call ESPERA_5
+    NOP
+    NOP
+    movwf LATA,0
+    NOP
+    NOP
+    NOP
+    NOP
+    clrf LATA,0 
+    
+    
+    NOP
+    call ESPERA_DEU
+    call ESPERA_DEU
+    NOP
+    NOP
+    NOP
+    goto LOOP     
+    
+ZONA_12
+    NOP
+    movlw 0x03
+    call ESPERA_DEU
+    call ESPERA_5
+    call ESPERA_5
+    call ESPERA_5
+    call ESPERA_5
+    call ESPERA_5
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_5
+    call ESPERA_DEU
+    call ESPERA_DEU
+    movwf LATA,0
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    clrf LATA,0 
+    NOP
+    call ESPERA_5
+    movwf LATA,0
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    clrf LATA,0 
+    NOP
+    call ESPERA_5
+    movwf LATA,0
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    clrf LATA,0 
+    NOP
+    call ESPERA_DEU
+    call ESPERA_DEU
+    goto LOOP 
+    
+ZONA_11
+    movlw 0x03
+    call ESPERA_DEU
+    movwf LATA,0
+    call ESPERA_5
+    call ESPERA_5
+    call ESPERA_5
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    call ESPERA_5
+    clrf LATA,0 
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    NOP
+    NOP
+    NOP
+    NOP
+    call ESPERA_DEU
+    NOP
+    call ESPERA_5
+    NOP
+    NOP
+    call ESPERA_5
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_5
+    call ESPERA_5
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    goto LOOP        
+    
 ZONA_10
+    NOP
+    NOP
+    NOP
+    call ESPERA_DEU
+    call ESPERA_DEU
     movlw 0x03
     movwf LATA,0
-    clrf LATA,0 
-    call ESPERA_DEU
-    call ESPERA_DEU
-    NOP
-    movwf LATA,0
     call ESPERA_5
     clrf LATA,0 
     NOP
@@ -307,28 +592,28 @@ ZONA_10
     NOP
     NOP
     NOP
-    call ESPERA_5
+    NOP
+    NOP
     NOP
     call ESPERA_5
-    NOP
-    NOP
+    call ESPERA_5
     call ESPERA_DEU
     call ESPERA_DEU
     call ESPERA_DEU
     goto LOOP        
 
 ZONA_9
+    NOP
+    NOP
+    NOP
+    call ESPERA_DEU
+    call ESPERA_DEU
+    NOP
+    NOP
+    NOP
+    NOP
     movlw 0x03
     movwf LATA,0
-    clrf LATA,0 
-    call ESPERA_DEU
-    call ESPERA_DEU
-    NOP
-    NOP
-    NOP
-    NOP
-    NOP
-    movwf LATA,0
     call ESPERA_5
     clrf LATA,0 
     NOP
@@ -365,24 +650,29 @@ ZONA_9
     movwf LATA,0
     call ESPERA_5
     clrf LATA,0 
+    NOP
+    NOP
     call ESPERA_5
-    call ESPERA_DEU
+    NOP
+    NOP
+    NOP
+    call ESPERA_5
     call ESPERA_DEU
     call ESPERA_DEU
     goto LOOP   
 
 ZONA_8
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    call ESPERA_5
+    call ESPERA_DEU
+    call ESPERA_DEU
     movlw 0x03
     movwf LATA,0
-    clrf LATA,0 
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_5
-    NOP
-    NOP
-    NOP
-    NOP
-    movwf LATA,0
     call ESPERA_5
     clrf LATA,0 
     call ESPERA_5
@@ -406,26 +696,27 @@ ZONA_8
     call ESPERA_DEU
     clrf LATA,0 
     NOP
+    call ESPERA_5
+    call ESPERA_DEU
+    call ESPERA_DEU
     NOP
     NOP
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
+    call ESPERA_5
     NOP
     NOP
     goto LOOP
 
 ZONA_7
+    NOP
+    NOP
+    NOP
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    NOP
+    NOP
     movlw 0x03
     movwf LATA,0
-    clrf LATA,0 
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
-    NOP
-    NOP
-    NOP
-    movwf LATA,0
     call ESPERA_5
     clrf LATA,0 
     call ESPERA_5
@@ -449,21 +740,26 @@ ZONA_7
     NOP
     NOP
     clrf LATA,0 
-    NOP
-    call ESPERA_DEU
     call ESPERA_DEU
     call ESPERA_DEU
     call ESPERA_DEU
     call ESPERA_5
+    NOP
+    NOP
+    NOP
+    call ESPERA_5
+    NOP
+    NOP
+    NOP
     NOP
     goto LOOP
 
 ZONA_6
     NOP
     NOP
-    movlw 0x03
-    movwf LATA,0
-    clrf LATA,0 
+    NOP
+    NOP
+    NOP
     NOP
     call ESPERA_DEU
     call ESPERA_5
@@ -518,9 +814,9 @@ ZONA_6
     
     
 ZONA_5
-    movlw 0x03
-    movwf LATA,0
-    clrf LATA,0 
+    NOP
+    NOP
+    NOP
     call ESPERA_DEU
     call ESPERA_DEU
     call ESPERA_5
@@ -567,9 +863,9 @@ ZONA_5
     
 
 ZONA_4
-    movlw 0x03
-    movwf LATA,0
-    clrf LATA,0 
+    NOP
+    NOP
+    NOP
     call ESPERA_DEU
     call ESPERA_DEU
     call ESPERA_DEU
@@ -608,9 +904,9 @@ ZONA_4
     goto LOOP
 
 ZONA_3
-    movlw 0x03
-    movwf LATA,0
-    clrf LATA,0 
+    NOP
+    NOP
+    NOP
     call ESPERA_DEU
     call ESPERA_DEU
     call ESPERA_DEU
