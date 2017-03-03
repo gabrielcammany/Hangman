@@ -15,6 +15,7 @@ CONFIG	WDT = OFF
 LINIASL  EQU 0x01
 LINIASH  EQU 0x02
 COLOR EQU 0x04 ;variable la cual modificamos segun queremos un color o otro
+COLOR2 EQU 0x05 ;variable la cual modificamos segun queremos un color o otro
 
 ;*************
 ;* CONSTANTS *
@@ -241,7 +242,7 @@ TERCERA
 ZONA_15
     NOP
     NOP
-    movlw 0x07
+    movlw 0x01
     call ESPERA_DEU
     call ESPERA_5
     call ESPERA_5

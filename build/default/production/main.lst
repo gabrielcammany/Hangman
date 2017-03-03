@@ -1,4 +1,4 @@
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE  1
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -35,1183 +35,1184 @@ Warning[205]: Found directive in column 1. (CONFIG)
   00000001            00015 LINIASL  EQU 0x01
   00000002            00016 LINIASH  EQU 0x02
   00000004            00017 COLOR EQU 0x04 ;variable la cual modificamos segun queremos un color o otro
-                      00018 
-                      00019 ;*************
-                      00020 ;* CONSTANTS *
-                      00021 ;*************
-  00000001            00022 ROJO EQU 0x01
-  00000002            00023 VERDE EQU 0x02
-  00000005            00024 ROSA EQU 0x05
-  00000007            00025 BLANCO EQU 0x07
-                      00026 
-                      00027 ;*********************************
-                      00028 ; VECTORS DE RESET I INTERRUPCI� *
-                      00029 ;*********************************
-                      00030     ORG 0x000000
-000000                00031 RESET_VECTOR
-000000 EF?? F???      00032     goto MAIN           
-                      00033 
-                      00034     ORG 0x000008
-000008                00035 HI_INT_VECTOR
-000008 EF?? F???      00036     goto HIGH_INT       
-                      00037 
-                      00038     ORG 0x000018
-000018                00039 LOW_INT_VECTOR
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE  2
+  00000005            00018 COLOR2 EQU 0x05 ;variable la cual modificamos segun queremos un color o otro
+                      00019 
+                      00020 ;*************
+                      00021 ;* CONSTANTS *
+                      00022 ;*************
+  00000001            00023 ROJO EQU 0x01
+  00000002            00024 VERDE EQU 0x02
+  00000005            00025 ROSA EQU 0x05
+  00000007            00026 BLANCO EQU 0x07
+                      00027 
+                      00028 ;*********************************
+                      00029 ; VECTORS DE RESET I INTERRUPCI� *
+                      00030 ;*********************************
+                      00031     ORG 0x000000
+000000                00032 RESET_VECTOR
+000000 EF?? F???      00033     goto MAIN           
+                      00034 
+                      00035     ORG 0x000008
+000008                00036 HI_INT_VECTOR
+000008 EF?? F???      00037     goto HIGH_INT       
+                      00038 
+                      00039     ORG 0x000018
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000018 0011           00040     retfie FAST         
-                      00041 
+000018                00040 LOW_INT_VECTOR
+000018 0011           00041     retfie FAST         
                       00042 
-                      00043 ;***********************************
-                      00044 ;* RUTINES DE SERVEI D'INTERRUPCI� *
-                      00045 ;***********************************
-00001A                00046 HIGH_INT
-00001A 0000           00047     nop
-00001C 0000           00048     nop
-00001E 0000           00049     nop
-                      00050     ;codi de interrupcio
-000020 6A89           00051     clrf LATA, 0;1
-000022 EC?? F???      00052     call RESET_TIMER;2
-                      00053     
-000026 808D           00054     bsf LATE,0,0;1
-000028 0E00           00055     movlw 0x00;1
-00002A 6402           00056     cpfsgt LINIASH,0;1/2
-00002C EC?? F???      00057     call PRIMERA_MITAD
-                      00058     
-000030 6002           00059     cpfslt LINIASH,0
-000032 EC?? F???      00060     call ESPERA_PM;
-                      00061     
-000036 EF?? F???      00062     goto FINAL_SYNC;2
-                      00063 
-00003A                00064 PRIMERA_MITAD
-00003A 0E02           00065     movlw 0x02;1
-00003C 6401           00066     cpfsgt LINIASL, 0;1-2-3
-00003E EF?? F???      00067     goto ACTIVA_VSYNC;1
-000042 928D           00068     bcf LATE,1,0;1
-                      00069     ;goto FINAL_SYNC;2
-000044 0012           00070     return;2
-                      00071    
-000046                00072 ACTIVA_VSYNC
-000046 828D           00073     bsf LATE,1,0;1
-                      00074     ;goto FINAL_SYNC
-                      00075     
-000048                00076 FINAL_SYNC
-000048 2A01           00077     incf LINIASL,1,0;1
-00004A B0D8           00078     btfsc STATUS, C, 0;1/2
-00004C EC?? F???      00079     call INCREMENTA_HIGH;2 
-000050 A0D8           00080     btfss STATUS, C, 0
-000052 EC?? F???      00081     call ESPERA_IH;VR3
-                      00082     ;3
-000056 EC?? F???      00083     call COMPRUEBA_FINAL;2
-                      00084     ;22
-00005A 0011           00085     retfie FAST;2
-                      00086 
-00005C                00087 INCREMENTA_HIGH 
-00005C 2A02           00088    incf LINIASH,1,0;1
-00005E 0012           00089    return;2
-                      00090     
-000060                00091 COMPRUEBA_FINAL
-000060 0E02           00092     movlw 0x02
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE  3
+                      00043 
+                      00044 ;***********************************
+                      00045 ;* RUTINES DE SERVEI D'INTERRUPCI� *
+                      00046 ;***********************************
+00001A                00047 HIGH_INT
+00001A 0000           00048     nop
+00001C 0000           00049     nop
+00001E 0000           00050     nop
+                      00051     ;codi de interrupcio
+000020 6A89           00052     clrf LATA, 0;1
+000022 EC?? F???      00053     call RESET_TIMER;2
+                      00054     
+000026 808D           00055     bsf LATE,0,0;1
+000028 0E00           00056     movlw 0x00;1
+00002A 6402           00057     cpfsgt LINIASH,0;1/2
+00002C EC?? F???      00058     call PRIMERA_MITAD
+                      00059     
+000030 6002           00060     cpfslt LINIASH,0
+000032 EC?? F???      00061     call ESPERA_PM;
+                      00062     
+000036 EF?? F???      00063     goto FINAL_SYNC;2
+                      00064 
+00003A                00065 PRIMERA_MITAD
+00003A 0E02           00066     movlw 0x02;1
+00003C 6401           00067     cpfsgt LINIASL, 0;1-2-3
+00003E EF?? F???      00068     goto ACTIVA_VSYNC;1
+000042 928D           00069     bcf LATE,1,0;1
+                      00070     ;goto FINAL_SYNC;2
+000044 0012           00071     return;2
+                      00072    
+000046                00073 ACTIVA_VSYNC
+000046 828D           00074     bsf LATE,1,0;1
+                      00075     ;goto FINAL_SYNC
+                      00076     
+000048                00077 FINAL_SYNC
+000048 2A01           00078     incf LINIASL,1,0;1
+00004A B0D8           00079     btfsc STATUS, C, 0;1/2
+00004C EC?? F???      00080     call INCREMENTA_HIGH;2 
+000050 A0D8           00081     btfss STATUS, C, 0
+000052 EC?? F???      00082     call ESPERA_IH;VR3
+                      00083     ;3
+000056 EC?? F???      00084     call COMPRUEBA_FINAL;2
+                      00085     ;22
+00005A 0011           00086     retfie FAST;2
+                      00087 
+00005C                00088 INCREMENTA_HIGH 
+00005C 2A02           00089    incf LINIASH,1,0;1
+00005E 0012           00090    return;2
+                      00091     
+000060                00092 COMPRUEBA_FINAL
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00093     ;9
-000062 6002           00094     cpfslt LINIASH,0
-000064 EC?? F???      00095     call COMPRUEBA_LOW
-                      00096     
-000068 6402           00097     cpfsgt LINIASH,0
-00006A EC?? F???      00098     call ESPERA_PM;vr8
-                      00099   
-00006E 908D           00100     bcf LATE,0,0
-000070 0012           00101     return
-                      00102 
-000072                00103 COMPRUEBA_LOW
-000072 0E7F           00104     movlw 0x7F;1-Compensamos el periodo de vSync
-000074 6001           00105     cpfslt LINIASL,0;2
-000076 EC?? F???      00106     call INIT_VARS;2
-                      00107     
-00007A 6401           00108     cpfsgt LINIASL,0
-00007C EC?? F???      00109     call ESPERA_IVARS;vr5
-                      00110     
-000080 0012           00111     return
-                      00112 ;****************************
-                      00113 ;* MAIN I RESTA DE FUNCIONS *
-                      00114 ;****************************
-000082                00115 INIT_VARS
-000082 6A01           00116     clrf LINIASL, 0;1
-000084 6A02           00117     clrf LINIASH, 0;1
-000086 0000           00118     NOP
-000088 0012           00119     return;2
-                      00120     
-00008A                00121 INIT_PORTS
-00008A 6A92           00122     clrf TRISA, 0
-00008C 0E08           00123     movlw 0x08
-00008E 6E96           00124     movwf TRISE, 0
-000090 6894           00125         setf TRISC, 0
-000092 6895           00126         setf TRISD, 0
-000094 0012           00127     return
-                      00128     
-000096                00129 INIT_TIMER
-                      00130     ;10001000
-000096 0E88           00131     movlw 0x88
-000098 6ED5           00132     movwf T0CON,0
-00009A 9ED0           00133     bcf RCON, IPEN, 0
-                      00134     
-                      00135     ;11100000
-00009C 0EE0           00136     movlw 0xE0
-00009E 6EF2           00137     movwf INTCON, 0
-                      00138     
-0000A0 EC?? F???      00139     call RESET_TIMER
-0000A4 0012           00140     return
-                      00141     
-0000A6                00142 RESET_TIMER
-0000A6 0EFE           00143     movlw 0xFE
-0000A8 6ED7           00144     movwf TMR0H, 0
-                      00145     ;movlw 0xD0
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE  4
+000060 0E02           00093     movlw 0x02
+                      00094     ;9
+000062 6002           00095     cpfslt LINIASH,0
+000064 EC?? F???      00096     call COMPRUEBA_LOW
+                      00097     
+000068 6402           00098     cpfsgt LINIASH,0
+00006A EC?? F???      00099     call ESPERA_PM;vr8
+                      00100   
+00006E 908D           00101     bcf LATE,0,0
+000070 0012           00102     return
+                      00103 
+000072                00104 COMPRUEBA_LOW
+000072 0E7F           00105     movlw 0x7F;1-Compensamos el periodo de vSync
+000074 6001           00106     cpfslt LINIASL,0;2
+000076 EC?? F???      00107     call INIT_VARS;2
+                      00108     
+00007A 6401           00109     cpfsgt LINIASL,0
+00007C EC?? F???      00110     call ESPERA_IVARS;vr5
+                      00111     
+000080 0012           00112     return
+                      00113 ;****************************
+                      00114 ;* MAIN I RESTA DE FUNCIONS *
+                      00115 ;****************************
+000082                00116 INIT_VARS
+000082 6A01           00117     clrf LINIASL, 0;1
+000084 6A02           00118     clrf LINIASH, 0;1
+000086 0000           00119     NOP
+000088 0012           00120     return;2
+                      00121     
+00008A                00122 INIT_PORTS
+00008A 6A92           00123     clrf TRISA, 0
+00008C 0E08           00124     movlw 0x08
+00008E 6E96           00125     movwf TRISE, 0
+000090 6894           00126     setf TRISC, 0
+000092 6895           00127     setf TRISD, 0
+000094 0012           00128     return
+                      00129     
+000096                00130 INIT_TIMER
+                      00131     ;10001000
+000096 0E88           00132     movlw 0x88
+000098 6ED5           00133     movwf T0CON,0
+00009A 9ED0           00134     bcf RCON, IPEN, 0
+                      00135     
+                      00136     ;11100000
+00009C 0EE0           00137     movlw 0xE0
+00009E 6EF2           00138     movwf INTCON, 0
+                      00139     
+0000A0 EC?? F???      00140     call RESET_TIMER
+0000A4 0012           00141     return
+                      00142     
+0000A6                00143 RESET_TIMER
+0000A6 0EFE           00144     movlw 0xFE
+0000A8 6ED7           00145     movwf TMR0H, 0
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0000AA 0ED3           00146     movlw 0xD3
-0000AC 6ED6           00147     movwf TMR0L, 0
-0000AE 94F2           00148     bcf INTCON, TMR0IF, 0
-0000B0 0012           00149     return
-                      00150     
-                      00151 ;********
-                      00152 ;* MAIN *
-                      00153 ;********
-                      00154 ;todos esp -2!!!
-                      00155 
-                      00156     
-0000B2                00157 MAIN
-0000B2 EC?? F???      00158     call INIT_VARS
-0000B6 EC?? F???      00159     call INIT_PORTS
-0000BA EC?? F???      00160     call INIT_TIMER
-                      00161     
-0000BE                00162 PRIMERA
-0000BE 0E5D           00163     movlw 0x5D ;Final Zona 1
-0000C0 6401           00164     cpfsgt LINIASL,0
-0000C2 EF?? F???      00165     goto LOOP
-0000C6 0E71           00166     movlw 0x71 ;Final Zona 1
-0000C8 6401           00167     cpfsgt LINIASL,0
-0000CA EF?? F???      00168     goto LINEA_ZONA1
-0000CE 0EAC           00169     movlw 0xAC ;Final zona 2
-0000D0 6401           00170     cpfsgt LINIASL,0
-0000D2 EF?? F???      00171     goto ZONA_2
-0000D6 0EDE           00172     movlw 0xDE ;Final zona 3
-0000D8 6401           00173     cpfsgt LINIASL,0
-0000DA EF?? F???      00174     goto ZONA_3
-0000DE 0EF0           00175     movlw 0xF0 ;Final zona 4
-0000E0 6401           00176     cpfsgt LINIASL,0
-0000E2 EF?? F???      00177     goto ZONA_4
-0000E6 0EF6           00178     movlw 0xF6 ;Final zona 4
-0000E8 6401           00179     cpfsgt LINIASL,0
-0000EA EF?? F???      00180     goto ZONA_5
-0000EE 0EFF           00181     movlw 0xFF ;Final zona 5
-0000F0 6401           00182     cpfsgt LINIASL,0
-0000F2 EF?? F???      00183     goto ZONA_6
-0000F6 EF?? F???      00184     goto LOOP
-                      00185     
-0000FA                00186 LOOP
-0000FA 0E00           00187     movlw 0x00
-0000FC 6402           00188     cpfsgt LINIASH,0
-0000FE EF?? F???      00189     goto PRIMERA            
-000102 0E01           00190     movlw 0x01
-000104 6402           00191     cpfsgt LINIASH,0
-000106 EF?? F???      00192     goto SEGUNDA
-00010A EF?? F???      00193     goto TERCERA
-00010E EF?? F???      00194     goto LOOP
-                      00195     
+                      00146     ;movlw 0xD0
+0000AA 0ED3           00147     movlw 0xD3
+0000AC 6ED6           00148     movwf TMR0L, 0
+0000AE 94F2           00149     bcf INTCON, TMR0IF, 0
+0000B0 0012           00150     return
+                      00151     
+                      00152 ;********
+                      00153 ;* MAIN *
+                      00154 ;********
+                      00155 ;todos esp -2!!!
+                      00156 
+                      00157     
+0000B2                00158 MAIN
+0000B2 EC?? F???      00159     call INIT_VARS
+0000B6 EC?? F???      00160     call INIT_PORTS
+0000BA EC?? F???      00161     call INIT_TIMER
+                      00162     
+0000BE                00163 PRIMERA
+0000BE 0E5D           00164     movlw 0x5D ;Final Zona 1
+0000C0 6401           00165     cpfsgt LINIASL,0
+0000C2 EF?? F???      00166     goto LOOP
+0000C6 0E71           00167     movlw 0x71 ;Final Zona 1
+0000C8 6401           00168     cpfsgt LINIASL,0
+0000CA EF?? F???      00169     goto LINEA_ZONA1
+0000CE 0EAC           00170     movlw 0xAC ;Final zona 2
+0000D0 6401           00171     cpfsgt LINIASL,0
+0000D2 EF?? F???      00172     goto ZONA_2
+0000D6 0EDE           00173     movlw 0xDE ;Final zona 3
+0000D8 6401           00174     cpfsgt LINIASL,0
+0000DA EF?? F???      00175     goto ZONA_3
+0000DE 0EF0           00176     movlw 0xF0 ;Final zona 4
+0000E0 6401           00177     cpfsgt LINIASL,0
+0000E2 EF?? F???      00178     goto ZONA_4
+0000E6 0EF6           00179     movlw 0xF6 ;Final zona 4
+0000E8 6401           00180     cpfsgt LINIASL,0
+0000EA EF?? F???      00181     goto ZONA_5
+0000EE 0EFF           00182     movlw 0xFF ;Final zona 5
+0000F0 6401           00183     cpfsgt LINIASL,0
+0000F2 EF?? F???      00184     goto ZONA_6
+0000F6 EF?? F???      00185     goto LOOP
+                      00186     
+0000FA                00187 LOOP
+0000FA 0E00           00188     movlw 0x00
+0000FC 6402           00189     cpfsgt LINIASH,0
+0000FE EF?? F???      00190     goto PRIMERA            
+000102 0E01           00191     movlw 0x01
+000104 6402           00192     cpfsgt LINIASH,0
+000106 EF?? F???      00193     goto SEGUNDA
+00010A EF?? F???      00194     goto TERCERA
+00010E EF?? F???      00195     goto LOOP
                       00196     
-000112                00197 SEGUNDA
-000112 0E2F           00198     movlw 0x2F ;Final Zona 7
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE  5
+                      00197     
+000112                00198 SEGUNDA
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000114 6401           00199     cpfsgt LINIASL,0
-000116 EF?? F???      00200     goto ZONA_7 
-                      00201     
-00011A                00202 ZONA8_ZONA9
-00011A 0E3F           00203     movlw 0x3F ;Final zona 8
-00011C 6401           00204     cpfsgt LINIASL,0
-00011E EF?? F???      00205     goto ZONA_8
-                      00206 
-000122                00207 ZONA9_ZONA10
-000122 0E77           00208     movlw 0x77 ;Final zona 9
-000124 6401           00209     cpfsgt LINIASL,0
-000126 EF?? F???      00210     goto ZONA_9
-                      00211    
-00012A                00212 ZONA10_ZONA11
-00012A 0EA5           00213     movlw 0xA5 ;Final zona 10
-00012C 6401           00214     cpfsgt LINIASL,0
-00012E EF?? F???      00215     goto ZONA_10   
-                      00216     
-000132                00217 ZONA11_ZONA12
-000132 0EB6           00218     movlw 0xB6 ;Final zona 11
-000134 6401           00219     cpfsgt LINIASL,0
-000136 EF?? F???      00220     goto ZONA_11
-                      00221 
-00013A                00222 ZONA13_ZONA14
-00013A 0EF5           00223     movlw 0xF5 ;Final zona 11
-00013C 6001           00224     cpfslt LINIASL,0
-00013E EF?? F???      00225     goto ZONA_12
-000142 EF?? F???      00226     goto LOOP 
-                      00227 
+000112 0E2F           00199     movlw 0x2F ;Final Zona 7
+000114 6401           00200     cpfsgt LINIASL,0
+000116 EF?? F???      00201     goto ZONA_7 
+                      00202     
+00011A                00203 ZONA8_ZONA9
+00011A 0E3F           00204     movlw 0x3F ;Final zona 8
+00011C 6401           00205     cpfsgt LINIASL,0
+00011E EF?? F???      00206     goto ZONA_8
+                      00207 
+000122                00208 ZONA9_ZONA10
+000122 0E77           00209     movlw 0x77 ;Final zona 9
+000124 6401           00210     cpfsgt LINIASL,0
+000126 EF?? F???      00211     goto ZONA_9
+                      00212    
+00012A                00213 ZONA10_ZONA11
+00012A 0EA5           00214     movlw 0xA5 ;Final zona 10
+00012C 6401           00215     cpfsgt LINIASL,0
+00012E EF?? F???      00216     goto ZONA_10   
+                      00217     
+000132                00218 ZONA11_ZONA12
+000132 0EB6           00219     movlw 0xB6 ;Final zona 11
+000134 6401           00220     cpfsgt LINIASL,0
+000136 EF?? F???      00221     goto ZONA_11
+                      00222 
+00013A                00223 ZONA13_ZONA14
+00013A 0EF5           00224     movlw 0xF5 ;Final zona 11
+00013C 6001           00225     cpfslt LINIASL,0
+00013E EF?? F???      00226     goto ZONA_12
+000142 EF?? F???      00227     goto LOOP 
                       00228 
-000146                00229 TERCERA
-000146 0E2F           00230     movlw 0x2F ;Final Zona 7
-000148 6401           00231     cpfsgt LINIASL,0
-00014A EF?? F???      00232     goto ZONA_13
-00014E 0E3B           00233     movlw 0x3B ;Final Zona 7
-000150 6401           00234     cpfsgt LINIASL,0
-000152 EF?? F???      00235     goto ZONA_14
-000156 0E75           00236     movlw 0x75 ;Final Zona 7
-000158 6401           00237     cpfsgt LINIASL,0
-00015A EF?? F???      00238     goto ZONA_15
-00015E EF?? F???      00239     goto LOOP
-                      00240 
-000162                00241 ZONA_15
-000162 0000           00242     NOP
-000164 0000           00243     NOP
-000166 0E07           00244     movlw 0x07
-000168 EC?? F???      00245     call ESPERA_DEU
-00016C EC?? F???      00246     call ESPERA_5
-000170 EC?? F???      00247     call ESPERA_5
-000174 EC?? F???      00248     call ESPERA_5
-000178 EC?? F???      00249     call ESPERA_5
-00017C 0000           00250     NOP
-00017E 0000           00251     NOP
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE  6
+                      00229 
+000146                00230 TERCERA
+000146 0E2F           00231     movlw 0x2F ;Final Zona 7
+000148 6401           00232     cpfsgt LINIASL,0
+00014A EF?? F???      00233     goto ZONA_13
+00014E 0E3B           00234     movlw 0x3B ;Final Zona 7
+000150 6401           00235     cpfsgt LINIASL,0
+000152 EF?? F???      00236     goto ZONA_14
+000156 0E75           00237     movlw 0x75 ;Final Zona 7
+000158 6401           00238     cpfsgt LINIASL,0
+00015A EF?? F???      00239     goto ZONA_15
+00015E EF?? F???      00240     goto LOOP
+                      00241 
+000162                00242 ZONA_15
+000162 0000           00243     NOP
+000164 0000           00244     NOP
+000166 0E01           00245     movlw 0x01
+000168 EC?? F???      00246     call ESPERA_DEU
+00016C EC?? F???      00247     call ESPERA_5
+000170 EC?? F???      00248     call ESPERA_5
+000174 EC?? F???      00249     call ESPERA_5
+000178 EC?? F???      00250     call ESPERA_5
+00017C 0000           00251     NOP
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE  6
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000180 EC?? F???      00252     call ESPERA_DEU
-000184 EC?? F???      00253     call ESPERA_DEU
-000188 EC?? F???      00254     call ESPERA_5
-00018C EC?? F???      00255     call ESPERA_DEU
-000190 EC?? F???      00256     call ESPERA_DEU
-000194 EC?? F???      00257     call ESPERA_DEU
-000198 EC?? F???      00258     call ESPERA_DEU
-00019C EC?? F???      00259     call ESPERA_5
-0001A0 0000           00260     NOP
-0001A2 6E89           00261     movwf LATA,0
-0001A4 0000           00262     NOP
-0001A6 0000           00263     NOP
-0001A8 0000           00264     NOP
-0001AA 0000           00265     NOP
-0001AC 6A89           00266     clrf LATA,0 
-0001AE 0000           00267     NOP
-0001B0 EC?? F???      00268     call ESPERA_5
-0001B4 EC?? F???      00269     call ESPERA_DEU
-0001B8 EC?? F???      00270     call ESPERA_DEU
-0001BC EC?? F???      00271     call ESPERA_5
-0001C0 0000           00272     NOP
-0001C2 6E89           00273     movwf LATA,0
-0001C4 0000           00274     NOP
-0001C6 0000           00275     NOP
-0001C8 0000           00276     NOP
-0001CA 0000           00277     NOP
-0001CC 6A89           00278     clrf LATA,0 
-0001CE 0000           00279     NOP
-0001D0 EC?? F???      00280     call ESPERA_5
-0001D4 0000           00281     NOP
-0001D6 0000           00282     NOP
-0001D8 0000           00283     NOP
-0001DA 0000           00284     NOP
-0001DC 0000           00285     NOP
-0001DE 0000           00286     NOP
-0001E0 0000           00287     NOP
-0001E2 0000           00288     NOP
-0001E4 EC?? F???      00289     call ESPERA_5
-0001E8 0000           00290     NOP
-0001EA EC?? F???      00291     call ESPERA_5
-0001EE EC?? F???      00292     call ESPERA_5
-0001F2 0000           00293     NOP
-0001F4 0000           00294     NOP
-0001F6 6E89           00295     movwf LATA,0
-0001F8 0000           00296     NOP
-0001FA 0000           00297     NOP
-0001FC 0000           00298     NOP
-0001FE 0000           00299     NOP
-000200 6A89           00300     clrf LATA,0 
-000202 0000           00301     NOP
-000204 EC?? F???      00302     call ESPERA_DEU
-000208 0000           00303     NOP
-00020A EC?? F???      00304     call ESPERA_5
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE  7
+00017E 0000           00252     NOP
+000180 EC?? F???      00253     call ESPERA_DEU
+000184 EC?? F???      00254     call ESPERA_DEU
+000188 EC?? F???      00255     call ESPERA_5
+00018C EC?? F???      00256     call ESPERA_DEU
+000190 EC?? F???      00257     call ESPERA_DEU
+000194 EC?? F???      00258     call ESPERA_DEU
+000198 EC?? F???      00259     call ESPERA_DEU
+00019C EC?? F???      00260     call ESPERA_5
+0001A0 0000           00261     NOP
+0001A2 6E89           00262     movwf LATA,0
+0001A4 0000           00263     NOP
+0001A6 0000           00264     NOP
+0001A8 0000           00265     NOP
+0001AA 0000           00266     NOP
+0001AC 6A89           00267     clrf LATA,0 
+0001AE 0000           00268     NOP
+0001B0 EC?? F???      00269     call ESPERA_5
+0001B4 EC?? F???      00270     call ESPERA_DEU
+0001B8 EC?? F???      00271     call ESPERA_DEU
+0001BC EC?? F???      00272     call ESPERA_5
+0001C0 0000           00273     NOP
+0001C2 6E89           00274     movwf LATA,0
+0001C4 0000           00275     NOP
+0001C6 0000           00276     NOP
+0001C8 0000           00277     NOP
+0001CA 0000           00278     NOP
+0001CC 6A89           00279     clrf LATA,0 
+0001CE 0000           00280     NOP
+0001D0 EC?? F???      00281     call ESPERA_5
+0001D4 0000           00282     NOP
+0001D6 0000           00283     NOP
+0001D8 0000           00284     NOP
+0001DA 0000           00285     NOP
+0001DC 0000           00286     NOP
+0001DE 0000           00287     NOP
+0001E0 0000           00288     NOP
+0001E2 0000           00289     NOP
+0001E4 EC?? F???      00290     call ESPERA_5
+0001E8 0000           00291     NOP
+0001EA EC?? F???      00292     call ESPERA_5
+0001EE EC?? F???      00293     call ESPERA_5
+0001F2 0000           00294     NOP
+0001F4 0000           00295     NOP
+0001F6 6E89           00296     movwf LATA,0
+0001F8 0000           00297     NOP
+0001FA 0000           00298     NOP
+0001FC 0000           00299     NOP
+0001FE 0000           00300     NOP
+000200 6A89           00301     clrf LATA,0 
+000202 0000           00302     NOP
+000204 EC?? F???      00303     call ESPERA_DEU
+000208 0000           00304     NOP
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE  7
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00020E 0000           00305     NOP
-000210 0000           00306     NOP
-000212 0000           00307     NOP
-000214 0000           00308     NOP
-000216 0000           00309     NOP
-000218 0000           00310     NOP
-00021A 0000           00311     NOP
-00021C EF?? F???      00312     goto LOOP    
-                      00313     
-000220                00314 ZONA_14
-000220 0000           00315     NOP
-000222 0E07           00316     movlw 0x07
-000224 EC?? F???      00317     call ESPERA_DEU
-000228 EC?? F???      00318     call ESPERA_5
-00022C EC?? F???      00319     call ESPERA_5
-000230 EC?? F???      00320     call ESPERA_5
-000234 EC?? F???      00321     call ESPERA_5
-000238 EC?? F???      00322     call ESPERA_5
-00023C 0000           00323     NOP
-00023E 0000           00324     NOP
-000240 EC?? F???      00325     call ESPERA_DEU
-000244 EC?? F???      00326     call ESPERA_DEU
-000248 EC?? F???      00327     call ESPERA_5
-00024C EC?? F???      00328     call ESPERA_DEU
-000250 EC?? F???      00329     call ESPERA_DEU
-000254 EC?? F???      00330     call ESPERA_DEU
-000258 EC?? F???      00331     call ESPERA_DEU
-00025C EC?? F???      00332     call ESPERA_5
-000260 0000           00333     NOP
-000262 6E89           00334     movwf LATA,0
-000264 0000           00335     NOP
-000266 0000           00336     NOP
-000268 0000           00337     NOP
-00026A 0000           00338     NOP
-00026C 6A89           00339     clrf LATA,0 
-00026E 0000           00340     NOP
-000270 EC?? F???      00341     call ESPERA_5
-000274 EC?? F???      00342     call ESPERA_DEU
-000278 EC?? F???      00343     call ESPERA_DEU
-00027C EC?? F???      00344     call ESPERA_5
-000280 0000           00345     NOP
-000282 6E89           00346     movwf LATA,0
-000284 0000           00347     NOP
-000286 0000           00348     NOP
-000288 0000           00349     NOP
-00028A 0000           00350     NOP
-00028C 6A89           00351     clrf LATA,0 
-00028E 0000           00352     NOP
-000290 EC?? F???      00353     call ESPERA_5
-                      00354     
+00020A EC?? F???      00305     call ESPERA_5
+00020E 0000           00306     NOP
+000210 0000           00307     NOP
+000212 0000           00308     NOP
+000214 0000           00309     NOP
+000216 0000           00310     NOP
+000218 0000           00311     NOP
+00021A 0000           00312     NOP
+00021C EF?? F???      00313     goto LOOP    
+                      00314     
+000220                00315 ZONA_14
+000220 0000           00316     NOP
+000222 0E07           00317     movlw 0x07
+000224 EC?? F???      00318     call ESPERA_DEU
+000228 EC?? F???      00319     call ESPERA_5
+00022C EC?? F???      00320     call ESPERA_5
+000230 EC?? F???      00321     call ESPERA_5
+000234 EC?? F???      00322     call ESPERA_5
+000238 EC?? F???      00323     call ESPERA_5
+00023C 0000           00324     NOP
+00023E 0000           00325     NOP
+000240 EC?? F???      00326     call ESPERA_DEU
+000244 EC?? F???      00327     call ESPERA_DEU
+000248 EC?? F???      00328     call ESPERA_5
+00024C EC?? F???      00329     call ESPERA_DEU
+000250 EC?? F???      00330     call ESPERA_DEU
+000254 EC?? F???      00331     call ESPERA_DEU
+000258 EC?? F???      00332     call ESPERA_DEU
+00025C EC?? F???      00333     call ESPERA_5
+000260 0000           00334     NOP
+000262 6E89           00335     movwf LATA,0
+000264 0000           00336     NOP
+000266 0000           00337     NOP
+000268 0000           00338     NOP
+00026A 0000           00339     NOP
+00026C 6A89           00340     clrf LATA,0 
+00026E 0000           00341     NOP
+000270 EC?? F???      00342     call ESPERA_5
+000274 EC?? F???      00343     call ESPERA_DEU
+000278 EC?? F???      00344     call ESPERA_DEU
+00027C EC?? F???      00345     call ESPERA_5
+000280 0000           00346     NOP
+000282 6E89           00347     movwf LATA,0
+000284 0000           00348     NOP
+000286 0000           00349     NOP
+000288 0000           00350     NOP
+00028A 0000           00351     NOP
+00028C 6A89           00352     clrf LATA,0 
+00028E 0000           00353     NOP
+000290 EC?? F???      00354     call ESPERA_5
                       00355     
-000294 6E89           00356     movwf LATA,0
-000296 0000           00357     NOP
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE  8
+                      00356     
+000294 6E89           00357     movwf LATA,0
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE  8
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000298 0000           00358     NOP
-00029A 0000           00359     NOP
-00029C 0000           00360     NOP
-00029E 0000           00361     NOP
-0002A0 0000           00362     NOP
-0002A2 0000           00363     NOP
-0002A4 EC?? F???      00364     call ESPERA_5
-0002A8 0000           00365     NOP
-0002AA EC?? F???      00366     call ESPERA_5
-0002AE EC?? F???      00367     call ESPERA_5
-0002B2 0000           00368     NOP
-0002B4 0000           00369     NOP
-0002B6 0000           00370     NOP
-0002B8 0000           00371     NOP
-0002BA 0000           00372     NOP
-0002BC 0000           00373     NOP
-0002BE 0000           00374     NOP
-0002C0 6A89           00375     clrf LATA,0 
-0002C2 0000           00376     NOP
-0002C4 EC?? F???      00377     call ESPERA_DEU
-0002C8 EC?? F???      00378     call ESPERA_DEU
-0002CC 0000           00379     NOP
-0002CE 0000           00380     NOP
-0002D0 0000           00381     NOP
-0002D2 EF?? F???      00382     goto LOOP
-                      00383     
+000296 0000           00358     NOP
+000298 0000           00359     NOP
+00029A 0000           00360     NOP
+00029C 0000           00361     NOP
+00029E 0000           00362     NOP
+0002A0 0000           00363     NOP
+0002A2 0000           00364     NOP
+0002A4 EC?? F???      00365     call ESPERA_5
+0002A8 0000           00366     NOP
+0002AA EC?? F???      00367     call ESPERA_5
+0002AE EC?? F???      00368     call ESPERA_5
+0002B2 0000           00369     NOP
+0002B4 0000           00370     NOP
+0002B6 0000           00371     NOP
+0002B8 0000           00372     NOP
+0002BA 0000           00373     NOP
+0002BC 0000           00374     NOP
+0002BE 0000           00375     NOP
+0002C0 6A89           00376     clrf LATA,0 
+0002C2 0000           00377     NOP
+0002C4 EC?? F???      00378     call ESPERA_DEU
+0002C8 EC?? F???      00379     call ESPERA_DEU
+0002CC 0000           00380     NOP
+0002CE 0000           00381     NOP
+0002D0 0000           00382     NOP
+0002D2 EF?? F???      00383     goto LOOP
                       00384     
-0002D6                00385 ZONA_13
-0002D6 0000           00386     NOP
-0002D8 0000           00387     NOP
-0002DA 0E03           00388     movlw 0x03
-0002DC EC?? F???      00389     call ESPERA_DEU
-0002E0 EC?? F???      00390     call ESPERA_5
-0002E4 EC?? F???      00391     call ESPERA_5
-0002E8 EC?? F???      00392     call ESPERA_5
-0002EC EC?? F???      00393     call ESPERA_5
-0002F0 EC?? F???      00394     call ESPERA_5
-0002F4 0000           00395     NOP
-0002F6 0000           00396     NOP
-0002F8 0000           00397     NOP
-0002FA 0000           00398     NOP
-0002FC 0000           00399     NOP
-0002FE EC?? F???      00400     call ESPERA_DEU
-000302 EC?? F???      00401     call ESPERA_DEU
-000306 EC?? F???      00402     call ESPERA_5
-00030A EC?? F???      00403     call ESPERA_DEU
-00030E EC?? F???      00404     call ESPERA_DEU
-000312 EC?? F???      00405     call ESPERA_DEU
-000316 EC?? F???      00406     call ESPERA_DEU
-00031A EC?? F???      00407     call ESPERA_5
-00031E 0000           00408     NOP
-000320 6E89           00409     movwf LATA,0
-000322 0000           00410     NOP
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE  9
+                      00385     
+0002D6                00386 ZONA_13
+0002D6 0000           00387     NOP
+0002D8 0000           00388     NOP
+0002DA 0E03           00389     movlw 0x03
+0002DC EC?? F???      00390     call ESPERA_DEU
+0002E0 EC?? F???      00391     call ESPERA_5
+0002E4 EC?? F???      00392     call ESPERA_5
+0002E8 EC?? F???      00393     call ESPERA_5
+0002EC EC?? F???      00394     call ESPERA_5
+0002F0 EC?? F???      00395     call ESPERA_5
+0002F4 0000           00396     NOP
+0002F6 0000           00397     NOP
+0002F8 0000           00398     NOP
+0002FA 0000           00399     NOP
+0002FC 0000           00400     NOP
+0002FE EC?? F???      00401     call ESPERA_DEU
+000302 EC?? F???      00402     call ESPERA_DEU
+000306 EC?? F???      00403     call ESPERA_5
+00030A EC?? F???      00404     call ESPERA_DEU
+00030E EC?? F???      00405     call ESPERA_DEU
+000312 EC?? F???      00406     call ESPERA_DEU
+000316 EC?? F???      00407     call ESPERA_DEU
+00031A EC?? F???      00408     call ESPERA_5
+00031E 0000           00409     NOP
+000320 6E89           00410     movwf LATA,0
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE  9
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000324 0000           00411     NOP
-000326 0000           00412     NOP
-000328 0000           00413     NOP
-00032A 6A89           00414     clrf LATA,0 
-00032C 0000           00415     NOP
-00032E EC?? F???      00416     call ESPERA_5
-000332 EC?? F???      00417     call ESPERA_DEU
-000336 EC?? F???      00418     call ESPERA_DEU
-00033A EC?? F???      00419     call ESPERA_5
-00033E 0000           00420     NOP
-000340 6E89           00421     movwf LATA,0
-000342 0000           00422     NOP
-000344 0000           00423     NOP
-000346 0000           00424     NOP
-000348 0000           00425     NOP
-00034A 6A89           00426     clrf LATA,0 
-00034C 0000           00427     NOP
-00034E EC?? F???      00428     call ESPERA_5
-                      00429     
+000322 0000           00411     NOP
+000324 0000           00412     NOP
+000326 0000           00413     NOP
+000328 0000           00414     NOP
+00032A 6A89           00415     clrf LATA,0 
+00032C 0000           00416     NOP
+00032E EC?? F???      00417     call ESPERA_5
+000332 EC?? F???      00418     call ESPERA_DEU
+000336 EC?? F???      00419     call ESPERA_DEU
+00033A EC?? F???      00420     call ESPERA_5
+00033E 0000           00421     NOP
+000340 6E89           00422     movwf LATA,0
+000342 0000           00423     NOP
+000344 0000           00424     NOP
+000346 0000           00425     NOP
+000348 0000           00426     NOP
+00034A 6A89           00427     clrf LATA,0 
+00034C 0000           00428     NOP
+00034E EC?? F???      00429     call ESPERA_5
                       00430     
-000352 6E89           00431     movwf LATA,0
-000354 0000           00432     NOP
-000356 0000           00433     NOP
-000358 0000           00434     NOP
-00035A 0000           00435     NOP
-00035C 6A89           00436     clrf LATA,0 
-00035E 0000           00437     NOP
-000360 0000           00438     NOP
-000362 EC?? F???      00439     call ESPERA_5
-000366 0000           00440     NOP
-000368 EC?? F???      00441     call ESPERA_5
-00036C EC?? F???      00442     call ESPERA_5
-000370 0000           00443     NOP
-000372 0000           00444     NOP
-000374 6E89           00445     movwf LATA,0
-000376 0000           00446     NOP
-000378 0000           00447     NOP
-00037A 0000           00448     NOP
-00037C 0000           00449     NOP
-00037E 6A89           00450     clrf LATA,0 
-                      00451     
+                      00431     
+000352 6E89           00432     movwf LATA,0
+000354 0000           00433     NOP
+000356 0000           00434     NOP
+000358 0000           00435     NOP
+00035A 0000           00436     NOP
+00035C 6A89           00437     clrf LATA,0 
+00035E 0000           00438     NOP
+000360 0000           00439     NOP
+000362 EC?? F???      00440     call ESPERA_5
+000366 0000           00441     NOP
+000368 EC?? F???      00442     call ESPERA_5
+00036C EC?? F???      00443     call ESPERA_5
+000370 0000           00444     NOP
+000372 0000           00445     NOP
+000374 6E89           00446     movwf LATA,0
+000376 0000           00447     NOP
+000378 0000           00448     NOP
+00037A 0000           00449     NOP
+00037C 0000           00450     NOP
+00037E 6A89           00451     clrf LATA,0 
                       00452     
-000380 0000           00453     NOP
-000382 EC?? F???      00454     call ESPERA_DEU
-000386 EC?? F???      00455     call ESPERA_DEU
-00038A 0000           00456     NOP
-00038C 0000           00457     NOP
-00038E 0000           00458     NOP
-000390 EF?? F???      00459     goto LOOP     
-                      00460     
-000394                00461 ZONA_12
-000394 0000           00462     NOP
-000396 0E03           00463     movlw 0x03
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 10
+                      00453     
+000380 0000           00454     NOP
+000382 EC?? F???      00455     call ESPERA_DEU
+000386 EC?? F???      00456     call ESPERA_DEU
+00038A 0000           00457     NOP
+00038C 0000           00458     NOP
+00038E 0000           00459     NOP
+000390 EF?? F???      00460     goto LOOP     
+                      00461     
+000394                00462 ZONA_12
+000394 0000           00463     NOP
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 10
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000398 EC?? F???      00464     call ESPERA_DEU
-00039C EC?? F???      00465     call ESPERA_5
-0003A0 EC?? F???      00466     call ESPERA_5
-0003A4 EC?? F???      00467     call ESPERA_5
-0003A8 EC?? F???      00468     call ESPERA_5
-0003AC EC?? F???      00469     call ESPERA_5
-0003B0 0000           00470     NOP
-0003B2 0000           00471     NOP
-0003B4 0000           00472     NOP
-0003B6 0000           00473     NOP
-0003B8 0000           00474     NOP
-0003BA EC?? F???      00475     call ESPERA_DEU
-0003BE EC?? F???      00476     call ESPERA_DEU
-0003C2 EC?? F???      00477     call ESPERA_5
-0003C6 EC?? F???      00478     call ESPERA_DEU
-0003CA EC?? F???      00479     call ESPERA_DEU
-0003CE 6E89           00480     movwf LATA,0
-0003D0 EC?? F???      00481     call ESPERA_DEU
-0003D4 EC?? F???      00482     call ESPERA_DEU
-0003D8 EC?? F???      00483     call ESPERA_DEU
-0003DC 6A89           00484     clrf LATA,0 
-0003DE 0000           00485     NOP
-0003E0 EC?? F???      00486     call ESPERA_5
-0003E4 6E89           00487     movwf LATA,0
-0003E6 EC?? F???      00488     call ESPERA_DEU
-0003EA EC?? F???      00489     call ESPERA_DEU
-0003EE EC?? F???      00490     call ESPERA_DEU
-0003F2 6A89           00491     clrf LATA,0 
-0003F4 0000           00492     NOP
-0003F6 EC?? F???      00493     call ESPERA_5
-0003FA 6E89           00494     movwf LATA,0
-0003FC EC?? F???      00495     call ESPERA_DEU
-000400 EC?? F???      00496     call ESPERA_DEU
-000404 EC?? F???      00497     call ESPERA_DEU
-000408 6A89           00498     clrf LATA,0 
-00040A 0000           00499     NOP
-00040C EC?? F???      00500     call ESPERA_DEU
-000410 EC?? F???      00501     call ESPERA_DEU
-000414 EF?? F???      00502     goto LOOP 
-                      00503     
-000418                00504 ZONA_11
-000418 0E03           00505     movlw 0x03
-00041A EC?? F???      00506     call ESPERA_DEU
-00041E 6E89           00507     movwf LATA,0
-000420 EC?? F???      00508     call ESPERA_5
-000424 EC?? F???      00509     call ESPERA_5
-000428 EC?? F???      00510     call ESPERA_5
-00042C 0000           00511     NOP
-00042E 0000           00512     NOP
-000430 0000           00513     NOP
-000432 0000           00514     NOP
-000434 0000           00515     NOP
-000436 EC?? F???      00516     call ESPERA_5
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 11
+000396 0E03           00464     movlw 0x03
+000398 EC?? F???      00465     call ESPERA_DEU
+00039C EC?? F???      00466     call ESPERA_5
+0003A0 EC?? F???      00467     call ESPERA_5
+0003A4 EC?? F???      00468     call ESPERA_5
+0003A8 EC?? F???      00469     call ESPERA_5
+0003AC EC?? F???      00470     call ESPERA_5
+0003B0 0000           00471     NOP
+0003B2 0000           00472     NOP
+0003B4 0000           00473     NOP
+0003B6 0000           00474     NOP
+0003B8 0000           00475     NOP
+0003BA EC?? F???      00476     call ESPERA_DEU
+0003BE EC?? F???      00477     call ESPERA_DEU
+0003C2 EC?? F???      00478     call ESPERA_5
+0003C6 EC?? F???      00479     call ESPERA_DEU
+0003CA EC?? F???      00480     call ESPERA_DEU
+0003CE 6E89           00481     movwf LATA,0
+0003D0 EC?? F???      00482     call ESPERA_DEU
+0003D4 EC?? F???      00483     call ESPERA_DEU
+0003D8 EC?? F???      00484     call ESPERA_DEU
+0003DC 6A89           00485     clrf LATA,0 
+0003DE 0000           00486     NOP
+0003E0 EC?? F???      00487     call ESPERA_5
+0003E4 6E89           00488     movwf LATA,0
+0003E6 EC?? F???      00489     call ESPERA_DEU
+0003EA EC?? F???      00490     call ESPERA_DEU
+0003EE EC?? F???      00491     call ESPERA_DEU
+0003F2 6A89           00492     clrf LATA,0 
+0003F4 0000           00493     NOP
+0003F6 EC?? F???      00494     call ESPERA_5
+0003FA 6E89           00495     movwf LATA,0
+0003FC EC?? F???      00496     call ESPERA_DEU
+000400 EC?? F???      00497     call ESPERA_DEU
+000404 EC?? F???      00498     call ESPERA_DEU
+000408 6A89           00499     clrf LATA,0 
+00040A 0000           00500     NOP
+00040C EC?? F???      00501     call ESPERA_DEU
+000410 EC?? F???      00502     call ESPERA_DEU
+000414 EF?? F???      00503     goto LOOP 
+                      00504     
+000418                00505 ZONA_11
+000418 0E03           00506     movlw 0x03
+00041A EC?? F???      00507     call ESPERA_DEU
+00041E 6E89           00508     movwf LATA,0
+000420 EC?? F???      00509     call ESPERA_5
+000424 EC?? F???      00510     call ESPERA_5
+000428 EC?? F???      00511     call ESPERA_5
+00042C 0000           00512     NOP
+00042E 0000           00513     NOP
+000430 0000           00514     NOP
+000432 0000           00515     NOP
+000434 0000           00516     NOP
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 11
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00043A 6A89           00517     clrf LATA,0 
-00043C EC?? F???      00518     call ESPERA_DEU
-000440 EC?? F???      00519     call ESPERA_DEU
-000444 EC?? F???      00520     call ESPERA_DEU
-000448 EC?? F???      00521     call ESPERA_DEU
-00044C EC?? F???      00522     call ESPERA_DEU
-000450 EC?? F???      00523     call ESPERA_DEU
-000454 EC?? F???      00524     call ESPERA_DEU
-000458 EC?? F???      00525     call ESPERA_DEU
-00045C EC?? F???      00526     call ESPERA_DEU
-000460 EC?? F???      00527     call ESPERA_DEU
-000464 EC?? F???      00528     call ESPERA_DEU
-000468 0000           00529     NOP
-00046A 0000           00530     NOP
-00046C 0000           00531     NOP
-00046E 0000           00532     NOP
-000470 EC?? F???      00533     call ESPERA_DEU
-000474 0000           00534     NOP
-000476 EC?? F???      00535     call ESPERA_5
-00047A 0000           00536     NOP
-00047C 0000           00537     NOP
-00047E EC?? F???      00538     call ESPERA_5
-000482 EC?? F???      00539     call ESPERA_DEU
-000486 EC?? F???      00540     call ESPERA_DEU
-00048A EC?? F???      00541     call ESPERA_DEU
-00048E EC?? F???      00542     call ESPERA_5
-000492 EC?? F???      00543     call ESPERA_5
-000496 0000           00544     NOP
-000498 0000           00545     NOP
-00049A 0000           00546     NOP
-00049C 0000           00547     NOP
-00049E 0000           00548     NOP
-0004A0 EF?? F???      00549     goto LOOP        
-                      00550     
-0004A4                00551 ZONA_10
-0004A4 0000           00552     NOP
-0004A6 0000           00553     NOP
-0004A8 0000           00554     NOP
-0004AA EC?? F???      00555     call ESPERA_DEU
-0004AE EC?? F???      00556     call ESPERA_DEU
-0004B2 0E03           00557     movlw 0x03
-0004B4 6E89           00558     movwf LATA,0
-0004B6 EC?? F???      00559     call ESPERA_5
-0004BA 6A89           00560     clrf LATA,0 
-0004BC 0000           00561     NOP
-0004BE 0000           00562     NOP
-0004C0 0000           00563     NOP
-0004C2 0000           00564     NOP
-0004C4 0000           00565     NOP
-0004C6 0000           00566     NOP
-0004C8 0000           00567     NOP
-0004CA 0000           00568     NOP
-0004CC EC?? F???      00569     call ESPERA_5
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 12
+000436 EC?? F???      00517     call ESPERA_5
+00043A 6A89           00518     clrf LATA,0 
+00043C EC?? F???      00519     call ESPERA_DEU
+000440 EC?? F???      00520     call ESPERA_DEU
+000444 EC?? F???      00521     call ESPERA_DEU
+000448 EC?? F???      00522     call ESPERA_DEU
+00044C EC?? F???      00523     call ESPERA_DEU
+000450 EC?? F???      00524     call ESPERA_DEU
+000454 EC?? F???      00525     call ESPERA_DEU
+000458 EC?? F???      00526     call ESPERA_DEU
+00045C EC?? F???      00527     call ESPERA_DEU
+000460 EC?? F???      00528     call ESPERA_DEU
+000464 EC?? F???      00529     call ESPERA_DEU
+000468 0000           00530     NOP
+00046A 0000           00531     NOP
+00046C 0000           00532     NOP
+00046E 0000           00533     NOP
+000470 EC?? F???      00534     call ESPERA_DEU
+000474 0000           00535     NOP
+000476 EC?? F???      00536     call ESPERA_5
+00047A 0000           00537     NOP
+00047C 0000           00538     NOP
+00047E EC?? F???      00539     call ESPERA_5
+000482 EC?? F???      00540     call ESPERA_DEU
+000486 EC?? F???      00541     call ESPERA_DEU
+00048A EC?? F???      00542     call ESPERA_DEU
+00048E EC?? F???      00543     call ESPERA_5
+000492 EC?? F???      00544     call ESPERA_5
+000496 0000           00545     NOP
+000498 0000           00546     NOP
+00049A 0000           00547     NOP
+00049C 0000           00548     NOP
+00049E 0000           00549     NOP
+0004A0 EF?? F???      00550     goto LOOP        
+                      00551     
+0004A4                00552 ZONA_10
+0004A4 0000           00553     NOP
+0004A6 0000           00554     NOP
+0004A8 0000           00555     NOP
+0004AA EC?? F???      00556     call ESPERA_DEU
+0004AE EC?? F???      00557     call ESPERA_DEU
+0004B2 0E03           00558     movlw 0x03
+0004B4 6E89           00559     movwf LATA,0
+0004B6 EC?? F???      00560     call ESPERA_5
+0004BA 6A89           00561     clrf LATA,0 
+0004BC 0000           00562     NOP
+0004BE 0000           00563     NOP
+0004C0 0000           00564     NOP
+0004C2 0000           00565     NOP
+0004C4 0000           00566     NOP
+0004C6 0000           00567     NOP
+0004C8 0000           00568     NOP
+0004CA 0000           00569     NOP
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 12
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0004D0 EC?? F???      00570     call ESPERA_DEU
-0004D4 EC?? F???      00571     call ESPERA_DEU
-0004D8 EC?? F???      00572     call ESPERA_DEU
-0004DC EC?? F???      00573     call ESPERA_DEU
-0004E0 EC?? F???      00574     call ESPERA_DEU
-0004E4 EC?? F???      00575     call ESPERA_DEU
-0004E8 EC?? F???      00576     call ESPERA_DEU
-0004EC EC?? F???      00577     call ESPERA_DEU
-0004F0 EC?? F???      00578     call ESPERA_DEU
-0004F4 EC?? F???      00579     call ESPERA_DEU
-0004F8 EC?? F???      00580     call ESPERA_DEU
-0004FC 0000           00581     NOP
-0004FE 0000           00582     NOP
-000500 0000           00583     NOP
-000502 0000           00584     NOP
-000504 0000           00585     NOP
-000506 0000           00586     NOP
-000508 0000           00587     NOP
-00050A EC?? F???      00588     call ESPERA_5
-00050E 0000           00589     NOP
-000510 EC?? F???      00590     call ESPERA_DEU
-000514 0000           00591     NOP
-000516 0000           00592     NOP
-000518 0000           00593     NOP
-00051A 0000           00594     NOP
-00051C 0000           00595     NOP
-00051E 0000           00596     NOP
-000520 0000           00597     NOP
-000522 EC?? F???      00598     call ESPERA_5
-000526 EC?? F???      00599     call ESPERA_5
-00052A EC?? F???      00600     call ESPERA_DEU
-00052E EC?? F???      00601     call ESPERA_DEU
-000532 EC?? F???      00602     call ESPERA_DEU
-000536 EF?? F???      00603     goto LOOP        
-                      00604 
-00053A                00605 ZONA_9
-00053A 0000           00606     NOP
-00053C 0000           00607     NOP
-00053E 0000           00608     NOP
-000540 EC?? F???      00609     call ESPERA_DEU
-000544 EC?? F???      00610     call ESPERA_DEU
-000548 0000           00611     NOP
-00054A 0000           00612     NOP
-00054C 0000           00613     NOP
-00054E 0000           00614     NOP
-000550 0E03           00615     movlw 0x03
-000552 6E89           00616     movwf LATA,0
-000554 EC?? F???      00617     call ESPERA_5
-000558 6A89           00618     clrf LATA,0 
-00055A 0000           00619     NOP
-00055C 0000           00620     NOP
-00055E 0000           00621     NOP
-000560 0000           00622     NOP
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 13
+0004CC EC?? F???      00570     call ESPERA_5
+0004D0 EC?? F???      00571     call ESPERA_DEU
+0004D4 EC?? F???      00572     call ESPERA_DEU
+0004D8 EC?? F???      00573     call ESPERA_DEU
+0004DC EC?? F???      00574     call ESPERA_DEU
+0004E0 EC?? F???      00575     call ESPERA_DEU
+0004E4 EC?? F???      00576     call ESPERA_DEU
+0004E8 EC?? F???      00577     call ESPERA_DEU
+0004EC EC?? F???      00578     call ESPERA_DEU
+0004F0 EC?? F???      00579     call ESPERA_DEU
+0004F4 EC?? F???      00580     call ESPERA_DEU
+0004F8 EC?? F???      00581     call ESPERA_DEU
+0004FC 0000           00582     NOP
+0004FE 0000           00583     NOP
+000500 0000           00584     NOP
+000502 0000           00585     NOP
+000504 0000           00586     NOP
+000506 0000           00587     NOP
+000508 0000           00588     NOP
+00050A EC?? F???      00589     call ESPERA_5
+00050E 0000           00590     NOP
+000510 EC?? F???      00591     call ESPERA_DEU
+000514 0000           00592     NOP
+000516 0000           00593     NOP
+000518 0000           00594     NOP
+00051A 0000           00595     NOP
+00051C 0000           00596     NOP
+00051E 0000           00597     NOP
+000520 0000           00598     NOP
+000522 EC?? F???      00599     call ESPERA_5
+000526 EC?? F???      00600     call ESPERA_5
+00052A EC?? F???      00601     call ESPERA_DEU
+00052E EC?? F???      00602     call ESPERA_DEU
+000532 EC?? F???      00603     call ESPERA_DEU
+000536 EF?? F???      00604     goto LOOP        
+                      00605 
+00053A                00606 ZONA_9
+00053A 0000           00607     NOP
+00053C 0000           00608     NOP
+00053E 0000           00609     NOP
+000540 EC?? F???      00610     call ESPERA_DEU
+000544 EC?? F???      00611     call ESPERA_DEU
+000548 0000           00612     NOP
+00054A 0000           00613     NOP
+00054C 0000           00614     NOP
+00054E 0000           00615     NOP
+000550 0E03           00616     movlw 0x03
+000552 6E89           00617     movwf LATA,0
+000554 EC?? F???      00618     call ESPERA_5
+000558 6A89           00619     clrf LATA,0 
+00055A 0000           00620     NOP
+00055C 0000           00621     NOP
+00055E 0000           00622     NOP
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 13
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000562 EC?? F???      00623     call ESPERA_5
-000566 EC?? F???      00624     call ESPERA_DEU
-00056A EC?? F???      00625     call ESPERA_DEU
-00056E EC?? F???      00626     call ESPERA_DEU
-000572 EC?? F???      00627     call ESPERA_DEU
-000576 EC?? F???      00628     call ESPERA_DEU
-00057A EC?? F???      00629     call ESPERA_DEU
-00057E EC?? F???      00630     call ESPERA_DEU
-000582 EC?? F???      00631     call ESPERA_DEU
-000586 EC?? F???      00632     call ESPERA_DEU
-00058A EC?? F???      00633     call ESPERA_DEU
-00058E EC?? F???      00634     call ESPERA_DEU
-000592 0000           00635     NOP
-000594 0000           00636     NOP
-000596 0000           00637     NOP
-000598 0000           00638     NOP
-00059A 0000           00639     NOP
-00059C 0000           00640     NOP
-00059E 6E89           00641     movwf LATA,0
-0005A0 EC?? F???      00642     call ESPERA_5
-0005A4 6A89           00643     clrf LATA,0 
-0005A6 EC?? F???      00644     call ESPERA_DEU
-0005AA 0000           00645     NOP
-0005AC 0000           00646     NOP
-0005AE 0000           00647     NOP
-0005B0 0000           00648     NOP
-0005B2 EC?? F???      00649     call ESPERA_5
-0005B6 6E89           00650     movwf LATA,0
-0005B8 EC?? F???      00651     call ESPERA_5
-0005BC 6A89           00652     clrf LATA,0 
-0005BE 0000           00653     NOP
-0005C0 0000           00654     NOP
-0005C2 EC?? F???      00655     call ESPERA_5
-0005C6 0000           00656     NOP
-0005C8 0000           00657     NOP
-0005CA 0000           00658     NOP
-0005CC EC?? F???      00659     call ESPERA_5
-0005D0 EC?? F???      00660     call ESPERA_DEU
-0005D4 EC?? F???      00661     call ESPERA_DEU
-0005D8 EF?? F???      00662     goto LOOP   
-                      00663 
-0005DC                00664 ZONA_8
-0005DC 0000           00665     NOP
-0005DE 0000           00666     NOP
-0005E0 0000           00667     NOP
-0005E2 0000           00668     NOP
-0005E4 0000           00669     NOP
-0005E6 0000           00670     NOP
-0005E8 EC?? F???      00671     call ESPERA_5
-0005EC EC?? F???      00672     call ESPERA_DEU
-0005F0 EC?? F???      00673     call ESPERA_DEU
-0005F4 0E03           00674     movlw 0x03
-0005F6 6E89           00675     movwf LATA,0
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 14
+000560 0000           00623     NOP
+000562 EC?? F???      00624     call ESPERA_5
+000566 EC?? F???      00625     call ESPERA_DEU
+00056A EC?? F???      00626     call ESPERA_DEU
+00056E EC?? F???      00627     call ESPERA_DEU
+000572 EC?? F???      00628     call ESPERA_DEU
+000576 EC?? F???      00629     call ESPERA_DEU
+00057A EC?? F???      00630     call ESPERA_DEU
+00057E EC?? F???      00631     call ESPERA_DEU
+000582 EC?? F???      00632     call ESPERA_DEU
+000586 EC?? F???      00633     call ESPERA_DEU
+00058A EC?? F???      00634     call ESPERA_DEU
+00058E EC?? F???      00635     call ESPERA_DEU
+000592 0000           00636     NOP
+000594 0000           00637     NOP
+000596 0000           00638     NOP
+000598 0000           00639     NOP
+00059A 0000           00640     NOP
+00059C 0000           00641     NOP
+00059E 6E89           00642     movwf LATA,0
+0005A0 EC?? F???      00643     call ESPERA_5
+0005A4 6A89           00644     clrf LATA,0 
+0005A6 EC?? F???      00645     call ESPERA_DEU
+0005AA 0000           00646     NOP
+0005AC 0000           00647     NOP
+0005AE 0000           00648     NOP
+0005B0 0000           00649     NOP
+0005B2 EC?? F???      00650     call ESPERA_5
+0005B6 6E89           00651     movwf LATA,0
+0005B8 EC?? F???      00652     call ESPERA_5
+0005BC 6A89           00653     clrf LATA,0 
+0005BE 0000           00654     NOP
+0005C0 0000           00655     NOP
+0005C2 EC?? F???      00656     call ESPERA_5
+0005C6 0000           00657     NOP
+0005C8 0000           00658     NOP
+0005CA 0000           00659     NOP
+0005CC EC?? F???      00660     call ESPERA_5
+0005D0 EC?? F???      00661     call ESPERA_DEU
+0005D4 EC?? F???      00662     call ESPERA_DEU
+0005D8 EF?? F???      00663     goto LOOP   
+                      00664 
+0005DC                00665 ZONA_8
+0005DC 0000           00666     NOP
+0005DE 0000           00667     NOP
+0005E0 0000           00668     NOP
+0005E2 0000           00669     NOP
+0005E4 0000           00670     NOP
+0005E6 0000           00671     NOP
+0005E8 EC?? F???      00672     call ESPERA_5
+0005EC EC?? F???      00673     call ESPERA_DEU
+0005F0 EC?? F???      00674     call ESPERA_DEU
+0005F4 0E03           00675     movlw 0x03
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 14
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0005F8 EC?? F???      00676     call ESPERA_5
-0005FC 6A89           00677     clrf LATA,0 
-0005FE EC?? F???      00678     call ESPERA_5
-000602 EC?? F???      00679     call ESPERA_DEU
-000606 EC?? F???      00680     call ESPERA_DEU
-00060A EC?? F???      00681     call ESPERA_DEU
-00060E EC?? F???      00682     call ESPERA_DEU
-000612 EC?? F???      00683     call ESPERA_DEU
-000616 EC?? F???      00684     call ESPERA_DEU
-00061A EC?? F???      00685     call ESPERA_DEU
-00061E EC?? F???      00686     call ESPERA_DEU
-000622 EC?? F???      00687     call ESPERA_DEU
-000626 EC?? F???      00688     call ESPERA_DEU
-00062A EC?? F???      00689     call ESPERA_DEU
-00062E EC?? F???      00690     call ESPERA_DEU
-000632 6E89           00691     movwf LATA,0
-000634 EC?? F???      00692     call ESPERA_DEU
-000638 EC?? F???      00693     call ESPERA_5
-00063C 0000           00694     NOP
-00063E EC?? F???      00695     call ESPERA_5
-000642 EC?? F???      00696     call ESPERA_DEU
-000646 6A89           00697     clrf LATA,0 
-000648 0000           00698     NOP
-00064A EC?? F???      00699     call ESPERA_5
-00064E EC?? F???      00700     call ESPERA_DEU
-000652 EC?? F???      00701     call ESPERA_DEU
-000656 0000           00702     NOP
-000658 0000           00703     NOP
-00065A EC?? F???      00704     call ESPERA_5
-00065E 0000           00705     NOP
-000660 0000           00706     NOP
-000662 EF?? F???      00707     goto LOOP
-                      00708 
-000666                00709 ZONA_7
-000666 0000           00710     NOP
-000668 0000           00711     NOP
-00066A 0000           00712     NOP
-00066C EC?? F???      00713     call ESPERA_DEU
-000670 EC?? F???      00714     call ESPERA_DEU
-000674 EC?? F???      00715     call ESPERA_DEU
-000678 0000           00716     NOP
-00067A 0000           00717     NOP
-00067C 0E03           00718     movlw 0x03
-00067E 6E89           00719     movwf LATA,0
-000680 EC?? F???      00720     call ESPERA_5
-000684 6A89           00721     clrf LATA,0 
-000686 EC?? F???      00722     call ESPERA_5
-00068A 0000           00723     NOP
-00068C EC?? F???      00724     call ESPERA_DEU
-000690 EC?? F???      00725     call ESPERA_DEU
-000694 EC?? F???      00726     call ESPERA_DEU
-000698 EC?? F???      00727     call ESPERA_DEU
-00069C EC?? F???      00728     call ESPERA_DEU
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 15
+0005F6 6E89           00676     movwf LATA,0
+0005F8 EC?? F???      00677     call ESPERA_5
+0005FC 6A89           00678     clrf LATA,0 
+0005FE EC?? F???      00679     call ESPERA_5
+000602 EC?? F???      00680     call ESPERA_DEU
+000606 EC?? F???      00681     call ESPERA_DEU
+00060A EC?? F???      00682     call ESPERA_DEU
+00060E EC?? F???      00683     call ESPERA_DEU
+000612 EC?? F???      00684     call ESPERA_DEU
+000616 EC?? F???      00685     call ESPERA_DEU
+00061A EC?? F???      00686     call ESPERA_DEU
+00061E EC?? F???      00687     call ESPERA_DEU
+000622 EC?? F???      00688     call ESPERA_DEU
+000626 EC?? F???      00689     call ESPERA_DEU
+00062A EC?? F???      00690     call ESPERA_DEU
+00062E EC?? F???      00691     call ESPERA_DEU
+000632 6E89           00692     movwf LATA,0
+000634 EC?? F???      00693     call ESPERA_DEU
+000638 EC?? F???      00694     call ESPERA_5
+00063C 0000           00695     NOP
+00063E EC?? F???      00696     call ESPERA_5
+000642 EC?? F???      00697     call ESPERA_DEU
+000646 6A89           00698     clrf LATA,0 
+000648 0000           00699     NOP
+00064A EC?? F???      00700     call ESPERA_5
+00064E EC?? F???      00701     call ESPERA_DEU
+000652 EC?? F???      00702     call ESPERA_DEU
+000656 0000           00703     NOP
+000658 0000           00704     NOP
+00065A EC?? F???      00705     call ESPERA_5
+00065E 0000           00706     NOP
+000660 0000           00707     NOP
+000662 EF?? F???      00708     goto LOOP
+                      00709 
+000666                00710 ZONA_7
+000666 0000           00711     NOP
+000668 0000           00712     NOP
+00066A 0000           00713     NOP
+00066C EC?? F???      00714     call ESPERA_DEU
+000670 EC?? F???      00715     call ESPERA_DEU
+000674 EC?? F???      00716     call ESPERA_DEU
+000678 0000           00717     NOP
+00067A 0000           00718     NOP
+00067C 0E03           00719     movlw 0x03
+00067E 6E89           00720     movwf LATA,0
+000680 EC?? F???      00721     call ESPERA_5
+000684 6A89           00722     clrf LATA,0 
+000686 EC?? F???      00723     call ESPERA_5
+00068A 0000           00724     NOP
+00068C EC?? F???      00725     call ESPERA_DEU
+000690 EC?? F???      00726     call ESPERA_DEU
+000694 EC?? F???      00727     call ESPERA_DEU
+000698 EC?? F???      00728     call ESPERA_DEU
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 15
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0006A0 EC?? F???      00729     call ESPERA_DEU
-0006A4 EC?? F???      00730     call ESPERA_DEU
-0006A8 EC?? F???      00731     call ESPERA_DEU
-0006AC EC?? F???      00732     call ESPERA_DEU
-0006B0 EC?? F???      00733     call ESPERA_DEU
-0006B4 EC?? F???      00734     call ESPERA_DEU
-0006B8 EC?? F???      00735     call ESPERA_DEU
-0006BC EC?? F???      00736     call ESPERA_DEU
-0006C0 6E89           00737     movwf LATA,0
-0006C2 EC?? F???      00738     call ESPERA_5
-0006C6 0000           00739     NOP
-0006C8 0000           00740     NOP
-0006CA 0000           00741     NOP
-0006CC 6A89           00742     clrf LATA,0 
-0006CE EC?? F???      00743     call ESPERA_DEU
-0006D2 EC?? F???      00744     call ESPERA_DEU
-0006D6 EC?? F???      00745     call ESPERA_DEU
-0006DA EC?? F???      00746     call ESPERA_5
-0006DE 0000           00747     NOP
-0006E0 0000           00748     NOP
-0006E2 0000           00749     NOP
-0006E4 EC?? F???      00750     call ESPERA_5
-0006E8 0000           00751     NOP
-0006EA 0000           00752     NOP
-0006EC 0000           00753     NOP
-0006EE 0000           00754     NOP
-0006F0 EF?? F???      00755     goto LOOP
-                      00756 
-0006F4                00757 ZONA_6
-0006F4 0000           00758     NOP
-0006F6 0000           00759     NOP
-0006F8 0000           00760     NOP
-0006FA 0000           00761     NOP
-0006FC 0000           00762     NOP
-0006FE 0000           00763     NOP
-000700 EC?? F???      00764     call ESPERA_DEU
-000704 EC?? F???      00765     call ESPERA_5
-000708 EC?? F???      00766     call ESPERA_5
-00070C 0E03           00767     movlw 0x03
-00070E 6E89           00768     movwf LATA,0
-000710 EC?? F???      00769     call ESPERA_5
-000714 6A89           00770     clrf LATA,0 
-000716 EC?? F???      00771     call ESPERA_5
-00071A 0000           00772     NOP
-00071C 0000           00773     NOP
-00071E 0000           00774     NOP
-000720 0000           00775     NOP
-000722 0000           00776     NOP
-000724 0000           00777     NOP
-000726 0000           00778     NOP
-000728 0000           00779     NOP
-00072A EC?? F???      00780     call ESPERA_DEU
-00072E EC?? F???      00781     call ESPERA_DEU
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 16
+00069C EC?? F???      00729     call ESPERA_DEU
+0006A0 EC?? F???      00730     call ESPERA_DEU
+0006A4 EC?? F???      00731     call ESPERA_DEU
+0006A8 EC?? F???      00732     call ESPERA_DEU
+0006AC EC?? F???      00733     call ESPERA_DEU
+0006B0 EC?? F???      00734     call ESPERA_DEU
+0006B4 EC?? F???      00735     call ESPERA_DEU
+0006B8 EC?? F???      00736     call ESPERA_DEU
+0006BC EC?? F???      00737     call ESPERA_DEU
+0006C0 6E89           00738     movwf LATA,0
+0006C2 EC?? F???      00739     call ESPERA_5
+0006C6 0000           00740     NOP
+0006C8 0000           00741     NOP
+0006CA 0000           00742     NOP
+0006CC 6A89           00743     clrf LATA,0 
+0006CE EC?? F???      00744     call ESPERA_DEU
+0006D2 EC?? F???      00745     call ESPERA_DEU
+0006D6 EC?? F???      00746     call ESPERA_DEU
+0006DA EC?? F???      00747     call ESPERA_5
+0006DE 0000           00748     NOP
+0006E0 0000           00749     NOP
+0006E2 0000           00750     NOP
+0006E4 EC?? F???      00751     call ESPERA_5
+0006E8 0000           00752     NOP
+0006EA 0000           00753     NOP
+0006EC 0000           00754     NOP
+0006EE 0000           00755     NOP
+0006F0 EF?? F???      00756     goto LOOP
+                      00757 
+0006F4                00758 ZONA_6
+0006F4 0000           00759     NOP
+0006F6 0000           00760     NOP
+0006F8 0000           00761     NOP
+0006FA 0000           00762     NOP
+0006FC 0000           00763     NOP
+0006FE 0000           00764     NOP
+000700 EC?? F???      00765     call ESPERA_DEU
+000704 EC?? F???      00766     call ESPERA_5
+000708 EC?? F???      00767     call ESPERA_5
+00070C 0E03           00768     movlw 0x03
+00070E 6E89           00769     movwf LATA,0
+000710 EC?? F???      00770     call ESPERA_5
+000714 6A89           00771     clrf LATA,0 
+000716 EC?? F???      00772     call ESPERA_5
+00071A 0000           00773     NOP
+00071C 0000           00774     NOP
+00071E 0000           00775     NOP
+000720 0000           00776     NOP
+000722 0000           00777     NOP
+000724 0000           00778     NOP
+000726 0000           00779     NOP
+000728 0000           00780     NOP
+00072A EC?? F???      00781     call ESPERA_DEU
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 16
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000732 EC?? F???      00782     call ESPERA_DEU
-000736 EC?? F???      00783     call ESPERA_DEU
-00073A EC?? F???      00784     call ESPERA_DEU
-00073E EC?? F???      00785     call ESPERA_DEU
-000742 EC?? F???      00786     call ESPERA_DEU
-000746 EC?? F???      00787     call ESPERA_DEU
-00074A EC?? F???      00788     call ESPERA_DEU
-00074E EC?? F???      00789     call ESPERA_DEU
-000752 EC?? F???      00790     call ESPERA_DEU
-000756 EC?? F???      00791     call ESPERA_DEU
-00075A 0000           00792     NOP
-00075C 0000           00793     NOP
-00075E 0000           00794     NOP
-000760 6E89           00795     movwf LATA,0
-000762 EC?? F???      00796     call ESPERA_5
-000766 0000           00797     NOP
-000768 0000           00798     NOP
-00076A 0000           00799     NOP
-00076C 6A89           00800     clrf LATA,0 
-00076E 0000           00801     NOP
-000770 0000           00802     NOP
-000772 EC?? F???      00803     call ESPERA_5
-000776 EC?? F???      00804     call ESPERA_5
-00077A 0000           00805     NOP
-00077C 0000           00806     NOP
-00077E 0000           00807     NOP
-000780 0000           00808     NOP
-000782 0000           00809     NOP
-000784 EC?? F???      00810     call ESPERA_5
-000788 EC?? F???      00811     call ESPERA_5
-00078C EC?? F???      00812     call ESPERA_DEU
-000790 EF?? F???      00813     goto LOOP
-                      00814     
+00072E EC?? F???      00782     call ESPERA_DEU
+000732 EC?? F???      00783     call ESPERA_DEU
+000736 EC?? F???      00784     call ESPERA_DEU
+00073A EC?? F???      00785     call ESPERA_DEU
+00073E EC?? F???      00786     call ESPERA_DEU
+000742 EC?? F???      00787     call ESPERA_DEU
+000746 EC?? F???      00788     call ESPERA_DEU
+00074A EC?? F???      00789     call ESPERA_DEU
+00074E EC?? F???      00790     call ESPERA_DEU
+000752 EC?? F???      00791     call ESPERA_DEU
+000756 EC?? F???      00792     call ESPERA_DEU
+00075A 0000           00793     NOP
+00075C 0000           00794     NOP
+00075E 0000           00795     NOP
+000760 6E89           00796     movwf LATA,0
+000762 EC?? F???      00797     call ESPERA_5
+000766 0000           00798     NOP
+000768 0000           00799     NOP
+00076A 0000           00800     NOP
+00076C 6A89           00801     clrf LATA,0 
+00076E 0000           00802     NOP
+000770 0000           00803     NOP
+000772 EC?? F???      00804     call ESPERA_5
+000776 EC?? F???      00805     call ESPERA_5
+00077A 0000           00806     NOP
+00077C 0000           00807     NOP
+00077E 0000           00808     NOP
+000780 0000           00809     NOP
+000782 0000           00810     NOP
+000784 EC?? F???      00811     call ESPERA_5
+000788 EC?? F???      00812     call ESPERA_5
+00078C EC?? F???      00813     call ESPERA_DEU
+000790 EF?? F???      00814     goto LOOP
                       00815     
-000794                00816 ZONA_5
-000794 0000           00817     NOP
-000796 0000           00818     NOP
-000798 0000           00819     NOP
-00079A EC?? F???      00820     call ESPERA_DEU
-00079E EC?? F???      00821     call ESPERA_DEU
-0007A2 EC?? F???      00822     call ESPERA_5
-0007A6 0000           00823     NOP
-0007A8 0000           00824     NOP
-0007AA 0E03           00825     movlw 0x03
-0007AC 6E89           00826     movwf LATA,0
-0007AE EC?? F???      00827     call ESPERA_5
-0007B2 6A89           00828     clrf LATA,0 
-0007B4 EC?? F???      00829     call ESPERA_5
-0007B8 EC?? F???      00830     call ESPERA_DEU
-0007BC EC?? F???      00831     call ESPERA_DEU
-0007C0 EC?? F???      00832     call ESPERA_DEU
-0007C4 EC?? F???      00833     call ESPERA_DEU
-0007C8 EC?? F???      00834     call ESPERA_DEU
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 17
+                      00816     
+000794                00817 ZONA_5
+000794 0000           00818     NOP
+000796 0000           00819     NOP
+000798 0000           00820     NOP
+00079A EC?? F???      00821     call ESPERA_DEU
+00079E EC?? F???      00822     call ESPERA_DEU
+0007A2 EC?? F???      00823     call ESPERA_5
+0007A6 0000           00824     NOP
+0007A8 0000           00825     NOP
+0007AA 0E03           00826     movlw 0x03
+0007AC 6E89           00827     movwf LATA,0
+0007AE EC?? F???      00828     call ESPERA_5
+0007B2 6A89           00829     clrf LATA,0 
+0007B4 EC?? F???      00830     call ESPERA_5
+0007B8 EC?? F???      00831     call ESPERA_DEU
+0007BC EC?? F???      00832     call ESPERA_DEU
+0007C0 EC?? F???      00833     call ESPERA_DEU
+0007C4 EC?? F???      00834     call ESPERA_DEU
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 17
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0007CC EC?? F???      00835     call ESPERA_DEU
-0007D0 EC?? F???      00836     call ESPERA_DEU
-0007D4 EC?? F???      00837     call ESPERA_DEU
-0007D8 EC?? F???      00838     call ESPERA_DEU
-0007DC EC?? F???      00839     call ESPERA_DEU
-0007E0 EC?? F???      00840     call ESPERA_DEU
-0007E4 0000           00841     NOP
-0007E6 0000           00842     NOP
-0007E8 0000           00843     NOP
-0007EA 0000           00844     NOP
-0007EC 0000           00845     NOP
-0007EE 6E89           00846     movwf LATA,0
-0007F0 EC?? F???      00847     call ESPERA_5
-0007F4 0000           00848     NOP
-0007F6 0000           00849     NOP
-0007F8 0000           00850     NOP
-0007FA 0000           00851     NOP
-0007FC 0000           00852     NOP
-0007FE 0000           00853     NOP
-000800 EC?? F???      00854     call ESPERA_DEU
-000804 EC?? F???      00855     call ESPERA_DEU
-000808 EC?? F???      00856     call ESPERA_DEU
-00080C 6A89           00857     clrf LATA,0 
-00080E EC?? F???      00858     call ESPERA_DEU
-000812 EC?? F???      00859     call ESPERA_5
-000816 EC?? F???      00860     call ESPERA_5
-00081A 0000           00861     NOP
-00081C EF?? F???      00862     goto LOOP
-                      00863     
-                      00864 
-000820                00865 ZONA_4
-000820 0000           00866     NOP
-000822 0000           00867     NOP
-000824 0000           00868     NOP
-000826 EC?? F???      00869     call ESPERA_DEU
-00082A EC?? F???      00870     call ESPERA_DEU
-00082E EC?? F???      00871     call ESPERA_DEU
-000832 0000           00872     NOP
-000834 0E03           00873     movlw 0x03
-000836 6E89           00874     movwf LATA,0
-000838 EC?? F???      00875     call ESPERA_5
-00083C 6A89           00876     clrf LATA,0 
-00083E EC?? F???      00877     call ESPERA_DEU
-000842 EC?? F???      00878     call ESPERA_DEU
-000846 EC?? F???      00879     call ESPERA_DEU
-00084A EC?? F???      00880     call ESPERA_DEU
-00084E EC?? F???      00881     call ESPERA_DEU
-000852 EC?? F???      00882     call ESPERA_DEU
-000856 EC?? F???      00883     call ESPERA_DEU
-00085A EC?? F???      00884     call ESPERA_DEU
-00085E EC?? F???      00885     call ESPERA_DEU
-000862 EC?? F???      00886     call ESPERA_DEU
-000866 EC?? F???      00887     call ESPERA_DEU
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 18
+0007C8 EC?? F???      00835     call ESPERA_DEU
+0007CC EC?? F???      00836     call ESPERA_DEU
+0007D0 EC?? F???      00837     call ESPERA_DEU
+0007D4 EC?? F???      00838     call ESPERA_DEU
+0007D8 EC?? F???      00839     call ESPERA_DEU
+0007DC EC?? F???      00840     call ESPERA_DEU
+0007E0 EC?? F???      00841     call ESPERA_DEU
+0007E4 0000           00842     NOP
+0007E6 0000           00843     NOP
+0007E8 0000           00844     NOP
+0007EA 0000           00845     NOP
+0007EC 0000           00846     NOP
+0007EE 6E89           00847     movwf LATA,0
+0007F0 EC?? F???      00848     call ESPERA_5
+0007F4 0000           00849     NOP
+0007F6 0000           00850     NOP
+0007F8 0000           00851     NOP
+0007FA 0000           00852     NOP
+0007FC 0000           00853     NOP
+0007FE 0000           00854     NOP
+000800 EC?? F???      00855     call ESPERA_DEU
+000804 EC?? F???      00856     call ESPERA_DEU
+000808 EC?? F???      00857     call ESPERA_DEU
+00080C 6A89           00858     clrf LATA,0 
+00080E EC?? F???      00859     call ESPERA_DEU
+000812 EC?? F???      00860     call ESPERA_5
+000816 EC?? F???      00861     call ESPERA_5
+00081A 0000           00862     NOP
+00081C EF?? F???      00863     goto LOOP
+                      00864     
+                      00865 
+000820                00866 ZONA_4
+000820 0000           00867     NOP
+000822 0000           00868     NOP
+000824 0000           00869     NOP
+000826 EC?? F???      00870     call ESPERA_DEU
+00082A EC?? F???      00871     call ESPERA_DEU
+00082E EC?? F???      00872     call ESPERA_DEU
+000832 0000           00873     NOP
+000834 0E03           00874     movlw 0x03
+000836 6E89           00875     movwf LATA,0
+000838 EC?? F???      00876     call ESPERA_5
+00083C 6A89           00877     clrf LATA,0 
+00083E EC?? F???      00878     call ESPERA_DEU
+000842 EC?? F???      00879     call ESPERA_DEU
+000846 EC?? F???      00880     call ESPERA_DEU
+00084A EC?? F???      00881     call ESPERA_DEU
+00084E EC?? F???      00882     call ESPERA_DEU
+000852 EC?? F???      00883     call ESPERA_DEU
+000856 EC?? F???      00884     call ESPERA_DEU
+00085A EC?? F???      00885     call ESPERA_DEU
+00085E EC?? F???      00886     call ESPERA_DEU
+000862 EC?? F???      00887     call ESPERA_DEU
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 18
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00086A EC?? F???      00888     call ESPERA_DEU
-00086E EC?? F???      00889     call ESPERA_DEU
-000872 EC?? F???      00890     call ESPERA_5
-000876 0E03           00891     movlw 0x03
-000878 6E89           00892     movwf LATA,0
-00087A EC?? F???      00893     call ESPERA_5
-00087E 0000           00894     NOP
-000880 0000           00895     NOP
-000882 0000           00896     NOP
-000884 6A89           00897     clrf LATA,0 
-000886 EC?? F???      00898     call ESPERA_5
-00088A EC?? F???      00899     call ESPERA_DEU
-00088E EC?? F???      00900     call ESPERA_DEU
-000892 EC?? F???      00901     call ESPERA_DEU
-000896 0000           00902     NOP
-000898 0000           00903     NOP    
-00089A EF?? F???      00904     goto LOOP
-                      00905 
-00089E                00906 ZONA_3
-00089E 0000           00907     NOP
-0008A0 0000           00908     NOP
-0008A2 0000           00909     NOP
-0008A4 EC?? F???      00910     call ESPERA_DEU
-0008A8 EC?? F???      00911     call ESPERA_DEU
-0008AC EC?? F???      00912     call ESPERA_DEU
-0008B0 EC?? F???      00913     call ESPERA_5
-0008B4 0E03           00914     movlw 0x03
-0008B6 6E89           00915     movwf LATA,0
-0008B8 EC?? F???      00916     call ESPERA_5
-0008BC 6A89           00917     clrf LATA,0 
-0008BE 0000           00918     NOP
-0008C0 EC?? F???      00919     call ESPERA_DEU
-0008C4 EC?? F???      00920     call ESPERA_DEU
-0008C8 EC?? F???      00921     call ESPERA_DEU
-0008CC EC?? F???      00922     call ESPERA_DEU
-0008D0 EC?? F???      00923     call ESPERA_DEU
-0008D4 EC?? F???      00924     call ESPERA_DEU
-0008D8 EC?? F???      00925     call ESPERA_DEU
-0008DC EC?? F???      00926     call ESPERA_DEU
-0008E0 EC?? F???      00927     call ESPERA_DEU
-0008E4 EC?? F???      00928     call ESPERA_DEU
-0008E8 EC?? F???      00929     call ESPERA_DEU
-0008EC EC?? F???      00930     call ESPERA_DEU
-0008F0 EC?? F???      00931     call ESPERA_5
-0008F4 0000           00932     NOP
-0008F6 0000           00933     NOP
-0008F8 0000           00934     NOP
-0008FA 0000           00935     NOP
-0008FC 0E03           00936     movlw 0x03
-0008FE 6E89           00937     movwf LATA,0
-000900 EC?? F???      00938     call ESPERA_5
-000904 EC?? F???      00939     call ESPERA_5
-000908 EC?? F???      00940     call ESPERA_5
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 19
+000866 EC?? F???      00888     call ESPERA_DEU
+00086A EC?? F???      00889     call ESPERA_DEU
+00086E EC?? F???      00890     call ESPERA_DEU
+000872 EC?? F???      00891     call ESPERA_5
+000876 0E03           00892     movlw 0x03
+000878 6E89           00893     movwf LATA,0
+00087A EC?? F???      00894     call ESPERA_5
+00087E 0000           00895     NOP
+000880 0000           00896     NOP
+000882 0000           00897     NOP
+000884 6A89           00898     clrf LATA,0 
+000886 EC?? F???      00899     call ESPERA_5
+00088A EC?? F???      00900     call ESPERA_DEU
+00088E EC?? F???      00901     call ESPERA_DEU
+000892 EC?? F???      00902     call ESPERA_DEU
+000896 0000           00903     NOP
+000898 0000           00904     NOP    
+00089A EF?? F???      00905     goto LOOP
+                      00906 
+00089E                00907 ZONA_3
+00089E 0000           00908     NOP
+0008A0 0000           00909     NOP
+0008A2 0000           00910     NOP
+0008A4 EC?? F???      00911     call ESPERA_DEU
+0008A8 EC?? F???      00912     call ESPERA_DEU
+0008AC EC?? F???      00913     call ESPERA_DEU
+0008B0 EC?? F???      00914     call ESPERA_5
+0008B4 0E03           00915     movlw 0x03
+0008B6 6E89           00916     movwf LATA,0
+0008B8 EC?? F???      00917     call ESPERA_5
+0008BC 6A89           00918     clrf LATA,0 
+0008BE 0000           00919     NOP
+0008C0 EC?? F???      00920     call ESPERA_DEU
+0008C4 EC?? F???      00921     call ESPERA_DEU
+0008C8 EC?? F???      00922     call ESPERA_DEU
+0008CC EC?? F???      00923     call ESPERA_DEU
+0008D0 EC?? F???      00924     call ESPERA_DEU
+0008D4 EC?? F???      00925     call ESPERA_DEU
+0008D8 EC?? F???      00926     call ESPERA_DEU
+0008DC EC?? F???      00927     call ESPERA_DEU
+0008E0 EC?? F???      00928     call ESPERA_DEU
+0008E4 EC?? F???      00929     call ESPERA_DEU
+0008E8 EC?? F???      00930     call ESPERA_DEU
+0008EC EC?? F???      00931     call ESPERA_DEU
+0008F0 EC?? F???      00932     call ESPERA_5
+0008F4 0000           00933     NOP
+0008F6 0000           00934     NOP
+0008F8 0000           00935     NOP
+0008FA 0000           00936     NOP
+0008FC 0E03           00937     movlw 0x03
+0008FE 6E89           00938     movwf LATA,0
+000900 EC?? F???      00939     call ESPERA_5
+000904 EC?? F???      00940     call ESPERA_5
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 19
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00090C 0000           00941     NOP
-00090E 0000           00942     NOP
-000910 0000           00943     NOP
-000912 6A89           00944     clrf LATA,0 
-000914 0000           00945     NOP
-000916 EC?? F???      00946     call ESPERA_5
-00091A EC?? F???      00947     call ESPERA_DEU
-00091E EC?? F???      00948     call ESPERA_DEU
-000922 EC?? F???      00949     call ESPERA_5
-000926 0000           00950     NOP 
-000928 EF?? F???      00951     goto LOOP
-                      00952         
-                      00953     
-00092C                00954 ZONA_2
-00092C 0000           00955     NOP
-00092E 0000           00956     NOP
-000930 EC?? F???      00957     call ESPERA_DEU
-000934 EC?? F???      00958     call ESPERA_DEU
-000938 EC?? F???      00959     call ESPERA_DEU
-00093C EC?? F???      00960     call ESPERA_DEU
-000940 0E03           00961     movlw 0x03
-000942 6E89           00962     movwf LATA,0
-000944 EC?? F???      00963     call ESPERA_5
-000948 6A89           00964     clrf LATA,0 
-00094A 0000           00965     NOP
-00094C EC?? F???      00966     call ESPERA_DEU
-000950 EC?? F???      00967     call ESPERA_DEU
-000954 EC?? F???      00968     call ESPERA_DEU
-000958 EC?? F???      00969     call ESPERA_DEU
-00095C EC?? F???      00970     call ESPERA_DEU
-000960 EC?? F???      00971     call ESPERA_DEU
-000964 EC?? F???      00972     call ESPERA_DEU
-000968 EC?? F???      00973     call ESPERA_DEU
-00096C EC?? F???      00974     call ESPERA_DEU
-000970 EC?? F???      00975     call ESPERA_DEU
-000974 EC?? F???      00976     call ESPERA_DEU
-000978 EC?? F???      00977     call ESPERA_DEU
-00097C EC?? F???      00978     call ESPERA_DEU
-000980 EC?? F???      00979     call ESPERA_5
-000984 0000           00980     NOP
-000986 0000           00981     NOP
-000988 0E03           00982     movlw 0x03
-00098A 6E89           00983     movwf LATA,0
-00098C 0000           00984     NOP
-00098E 0000           00985     NOP
-000990 6A89           00986     clrf LATA,0 
-000992 0000           00987     NOP
-000994 EC?? F???      00988     call ESPERA_DEU
-000998 EC?? F???      00989     call ESPERA_DEU
-00099C EC?? F???      00990     call ESPERA_DEU
-0009A0 EC?? F???      00991     call ESPERA_DEU
-0009A4 EF?? F???      00992     goto LOOP
-                      00993     
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 20
+000908 EC?? F???      00941     call ESPERA_5
+00090C 0000           00942     NOP
+00090E 0000           00943     NOP
+000910 0000           00944     NOP
+000912 6A89           00945     clrf LATA,0 
+000914 0000           00946     NOP
+000916 EC?? F???      00947     call ESPERA_5
+00091A EC?? F???      00948     call ESPERA_DEU
+00091E EC?? F???      00949     call ESPERA_DEU
+000922 EC?? F???      00950     call ESPERA_5
+000926 0000           00951     NOP 
+000928 EF?? F???      00952     goto LOOP
+                      00953         
+                      00954     
+00092C                00955 ZONA_2
+00092C 0000           00956     NOP
+00092E 0000           00957     NOP
+000930 EC?? F???      00958     call ESPERA_DEU
+000934 EC?? F???      00959     call ESPERA_DEU
+000938 EC?? F???      00960     call ESPERA_DEU
+00093C EC?? F???      00961     call ESPERA_DEU
+000940 0E03           00962     movlw 0x03
+000942 6E89           00963     movwf LATA,0
+000944 EC?? F???      00964     call ESPERA_5
+000948 6A89           00965     clrf LATA,0 
+00094A 0000           00966     NOP
+00094C EC?? F???      00967     call ESPERA_DEU
+000950 EC?? F???      00968     call ESPERA_DEU
+000954 EC?? F???      00969     call ESPERA_DEU
+000958 EC?? F???      00970     call ESPERA_DEU
+00095C EC?? F???      00971     call ESPERA_DEU
+000960 EC?? F???      00972     call ESPERA_DEU
+000964 EC?? F???      00973     call ESPERA_DEU
+000968 EC?? F???      00974     call ESPERA_DEU
+00096C EC?? F???      00975     call ESPERA_DEU
+000970 EC?? F???      00976     call ESPERA_DEU
+000974 EC?? F???      00977     call ESPERA_DEU
+000978 EC?? F???      00978     call ESPERA_DEU
+00097C EC?? F???      00979     call ESPERA_DEU
+000980 EC?? F???      00980     call ESPERA_5
+000984 0000           00981     NOP
+000986 0000           00982     NOP
+000988 0E03           00983     movlw 0x03
+00098A 6E89           00984     movwf LATA,0
+00098C 0000           00985     NOP
+00098E 0000           00986     NOP
+000990 6A89           00987     clrf LATA,0 
+000992 0000           00988     NOP
+000994 EC?? F???      00989     call ESPERA_DEU
+000998 EC?? F???      00990     call ESPERA_DEU
+00099C EC?? F???      00991     call ESPERA_DEU
+0009A0 EC?? F???      00992     call ESPERA_DEU
+0009A4 EF?? F???      00993     goto LOOP
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 20
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0009A8                00994 LINEA_ZONA1
-0009A8 0000           00995     NOP
-0009AA 0000           00996     NOP
-0009AC EC?? F???      00997     call ESPERA_DEU
-0009B0 EC?? F???      00998     call ESPERA_DEU
-0009B4 EC?? F???      00999     call ESPERA_DEU
-0009B8 EC?? F???      01000     call ESPERA_DEU
-0009BC 0000           01001     NOP
-0009BE 0000           01002     NOP
-0009C0 0000           01003     NOP
-0009C2 0E03           01004     movlw 0x03
-0009C4 6E89           01005     movwf LATA,0
-0009C6 0000           01006     NOP
-0009C8 0000           01007     NOP
-0009CA EC?? F???      01008     call ESPERA_5
-0009CE EC?? F???      01009     call ESPERA_DEU
-0009D2 EC?? F???      01010     call ESPERA_DEU
-0009D6 EC?? F???      01011     call ESPERA_DEU
-0009DA EC?? F???      01012     call ESPERA_DEU
-0009DE EC?? F???      01013     call ESPERA_DEU
-0009E2 EC?? F???      01014     call ESPERA_DEU
-0009E6 EC?? F???      01015     call ESPERA_DEU
-0009EA EC?? F???      01016     call ESPERA_DEU
-0009EE EC?? F???      01017     call ESPERA_DEU
-0009F2 EC?? F???      01018     call ESPERA_DEU
-0009F6 EC?? F???      01019     call ESPERA_DEU
-0009FA EC?? F???      01020     call ESPERA_DEU
-0009FE EC?? F???      01021     call ESPERA_DEU
-000A02 EC?? F???      01022     call ESPERA_DEU
-000A06 EC?? F???      01023     call ESPERA_5
-000A0A 6A89           01024     clrf LATA,0 
-000A0C EC?? F???      01025     call ESPERA_DEU
-000A10 EC?? F???      01026     call ESPERA_DEU
-000A14 EC?? F???      01027     call ESPERA_DEU
-000A18 EC?? F???      01028     call ESPERA_5
-000A1C 0000           01029     NOP
-000A1E 0000           01030     NOP
-000A20 0000           01031     NOP
-000A22 EF?? F???      01032     goto LOOP
-                      01033     
+                      00994     
+0009A8                00995 LINEA_ZONA1
+0009A8 0000           00996     NOP
+0009AA 0000           00997     NOP
+0009AC EC?? F???      00998     call ESPERA_DEU
+0009B0 EC?? F???      00999     call ESPERA_DEU
+0009B4 EC?? F???      01000     call ESPERA_DEU
+0009B8 EC?? F???      01001     call ESPERA_DEU
+0009BC 0000           01002     NOP
+0009BE 0000           01003     NOP
+0009C0 0000           01004     NOP
+0009C2 0E03           01005     movlw 0x03
+0009C4 6E89           01006     movwf LATA,0
+0009C6 0000           01007     NOP
+0009C8 0000           01008     NOP
+0009CA EC?? F???      01009     call ESPERA_5
+0009CE EC?? F???      01010     call ESPERA_DEU
+0009D2 EC?? F???      01011     call ESPERA_DEU
+0009D6 EC?? F???      01012     call ESPERA_DEU
+0009DA EC?? F???      01013     call ESPERA_DEU
+0009DE EC?? F???      01014     call ESPERA_DEU
+0009E2 EC?? F???      01015     call ESPERA_DEU
+0009E6 EC?? F???      01016     call ESPERA_DEU
+0009EA EC?? F???      01017     call ESPERA_DEU
+0009EE EC?? F???      01018     call ESPERA_DEU
+0009F2 EC?? F???      01019     call ESPERA_DEU
+0009F6 EC?? F???      01020     call ESPERA_DEU
+0009FA EC?? F???      01021     call ESPERA_DEU
+0009FE EC?? F???      01022     call ESPERA_DEU
+000A02 EC?? F???      01023     call ESPERA_DEU
+000A06 EC?? F???      01024     call ESPERA_5
+000A0A 6A89           01025     clrf LATA,0 
+000A0C EC?? F???      01026     call ESPERA_DEU
+000A10 EC?? F???      01027     call ESPERA_DEU
+000A14 EC?? F???      01028     call ESPERA_DEU
+000A18 EC?? F???      01029     call ESPERA_5
+000A1C 0000           01030     NOP
+000A1E 0000           01031     NOP
+000A20 0000           01032     NOP
+000A22 EF?? F???      01033     goto LOOP
                       01034     
-000A26                01035 ESPERA_IH
-000A26 0000           01036     NOP
-000A28 0012           01037     return
-                      01038     
-000A2A                01039 ESPERA_IVARS
-000A2A 0000           01040     NOP
-000A2C 0000           01041     NOP
-000A2E 0000           01042     NOP
-000A30 0012           01043     return
-                      01044     
-000A32                01045 ESPERA_PM
-000A32 0000           01046     NOP
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 21
+                      01035     
+000A26                01036 ESPERA_IH
+000A26 0000           01037     NOP
+000A28 0012           01038     return
+                      01039     
+000A2A                01040 ESPERA_IVARS
+000A2A 0000           01041     NOP
+000A2C 0000           01042     NOP
+000A2E 0000           01043     NOP
+000A30 0012           01044     return
+                      01045     
+000A32                01046 ESPERA_PM
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 21
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000A34 0000           01047     NOP
-000A36 0000           01048     NOP
-000A38 0000           01049     NOP
-000A3A 0000           01050     NOP
-000A3C 0000           01051     NOP
-000A3E 0012           01052     return
-                      01053     
-000A40                01054 ESPERA_5
-000A40 0000           01055     NOP
-000A42 0012           01056     RETURN
-                      01057     
-000A44                01058 ESPERA_DEU
-000A44 0000           01059     NOP
-000A46 0000           01060     NOP
-000A48 0000           01061     NOP
-000A4A 0000           01062     NOP
-000A4C 0000           01063     NOP
-000A4E 0000           01064     NOP
-000A50 0012           01065     return
-                      01066   
-                      01067 
-                      01068     
-                      01069         
-                      01070 ;*******
-                      01071 ;* END *
-                      01072 ;*******    
-                      01073     END
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 22
+000A32 0000           01047     NOP
+000A34 0000           01048     NOP
+000A36 0000           01049     NOP
+000A38 0000           01050     NOP
+000A3A 0000           01051     NOP
+000A3C 0000           01052     NOP
+000A3E 0012           01053     return
+                      01054     
+000A40                01055 ESPERA_5
+000A40 0000           01056     NOP
+000A42 0012           01057     RETURN
+                      01058     
+000A44                01059 ESPERA_DEU
+000A44 0000           01060     NOP
+000A46 0000           01061     NOP
+000A48 0000           01062     NOP
+000A4A 0000           01063     NOP
+000A4C 0000           01064     NOP
+000A4E 0000           01065     NOP
+000A50 0012           01066     return
+                      01067   
+                      01068 
+                      01069     
+                      01070         
+                      01071 ;*******
+                      01072 ;* END *
+                      01073 ;*******    
+                      01074     END
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 22
 
 
 SYMBOL TABLE
@@ -1270,7 +1271,7 @@ BCLIF                             00000003
 BCLIP                             00000003
 BF                                00000000
 BGST                              00000005
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 23
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 23
 
 
 SYMBOL TABLE
@@ -1329,7 +1330,7 @@ CHS3                              00000005
 CIS                               00000003
 CK                                00000006
 CKE                               00000006
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 24
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 24
 
 
 SYMBOL TABLE
@@ -1346,6 +1347,7 @@ CMIE                              00000006
 CMIF                              00000006
 CMIP                              00000006
 COLOR                             00000004
+COLOR2                            00000005
 COMPRUEBA_FINAL                   00000060
 COMPRUEBA_LOW                     00000072
 CREN                              00000004
@@ -1387,13 +1389,13 @@ EECON1                            00000FA6
 EECON2                            00000FA7
 EEDATA                            00000FA8
 EEIE                              00000004
-EEIF                              00000004
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 25
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 25
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+EEIF                              00000004
 EEIP                              00000004
 EEPGD                             00000007
 ESPERA_5                          00000A40
@@ -1446,13 +1448,13 @@ INDF2                             00000FDF
 INIT_PORTS                        0000008A
 INIT_TIMER                        00000096
 INIT_VARS                         00000082
-INT0                              00000000
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 26
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 26
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+INT0                              00000000
 INT0E                             00000004
 INT0F                             00000001
 INT0IE                            00000004
@@ -1505,13 +1507,13 @@ LATB1                             00000001
 LATB2                             00000002
 LATB3                             00000003
 LATB4                             00000004
-LATB5                             00000005
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 27
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 27
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+LATB5                             00000005
 LATB6                             00000006
 LATB7                             00000007
 LATC                              00000F8B
@@ -1564,13 +1566,13 @@ NOT_CS                            00000002
 NOT_DONE                          00000001
 NOT_MCLR                          00000003
 NOT_PD                            00000002
-NOT_POR                           00000001
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 28
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 28
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+NOT_POR                           00000001
 NOT_RBPU                          00000007
 NOT_RD                            00000000
 NOT_RI                            00000004
@@ -1623,13 +1625,13 @@ PGD                               00000007
 PGM                               00000005
 PIE1                              00000F9D
 PIE2                              00000FA0
-PIR1                              00000F9E
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 29
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 29
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+PIR1                              00000F9E
 PIR2                              00000FA1
 PLLEN                             00000006
 PLUSW0                            00000FEB
@@ -1682,13 +1684,13 @@ RA2                               00000002
 RA3                               00000003
 RA4                               00000004
 RA5                               00000005
-RA6                               00000006
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 30
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 30
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+RA6                               00000006
 RA7                               00000007
 RB0                               00000000
 RB1                               00000001
@@ -1741,13 +1743,13 @@ ROSA                              00000005
 RSEN                              00000001
 RX                                00000007
 RX9                               00000006
-RX9D                              00000000
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 31
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 31
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+RX9D                              00000000
 RXDTP                             00000005
 R_NOT_W                           00000002
 R_W                               00000002
@@ -1800,13 +1802,13 @@ T016BIT                           00000006
 T08BIT                            00000006
 T0CKI                             00000004
 T0CON                             00000FD5
-T0CS                              00000005
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 32
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 32
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+T0CS                              00000005
 T0IE                              00000005
 T0IF                              00000002
 T0PS0                             00000000
@@ -1859,13 +1861,13 @@ TMR1L                             00000FCE
 TMR1ON                            00000000
 TMR2                              00000FCC
 TMR2IE                            00000001
-TMR2IF                            00000001
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 33
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 33
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TMR2IF                            00000001
 TMR2IP                            00000001
 TMR2ON                            00000002
 TMR3                              00000FB2
@@ -1918,13 +1920,13 @@ TRISD1                            00000001
 TRISD2                            00000002
 TRISD3                            00000003
 TRISD4                            00000004
-TRISD5                            00000005
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 34
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 34
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TRISD5                            00000005
 TRISD6                            00000006
 TRISD7                            00000007
 TRISE                             00000F96
@@ -1977,13 +1979,13 @@ ZONA_14                           00000220
 ZONA_15                           00000162
 ZONA_2                            0000092C
 ZONA_3                            0000089E
-ZONA_4                            00000820
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 35
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 35
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+ZONA_4                            00000820
 ZONA_5                            00000794
 ZONA_6                            000006F4
 ZONA_7                            00000666
@@ -2036,13 +2038,13 @@ _FCMEN_ON_1H                      000000FF
 _IDLOC0                           00200000
 _IDLOC1                           00200001
 _IDLOC2                           00200002
-_IDLOC3                           00200003
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 36
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 36
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+_IDLOC3                           00200003
 _IDLOC4                           00200004
 _IDLOC5                           00200005
 _IDLOC6                           00200006
@@ -2095,13 +2097,13 @@ _WRT1_OFF_6L                      000000FF
 _WRT1_ON_6L                       000000FD
 _WRTB_OFF_6H                      000000FF
 _WRTB_ON_6H                       000000BF
-_WRTC_OFF_6H                      000000FF
-MPASM 5.70                          MAIN.ASM   2-28-2017  19:57:38         PAGE 37
+MPASM 5.70                          MAIN.ASM   3-1-2017  18:17:48         PAGE 37
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+_WRTC_OFF_6H                      000000FF
 _WRTC_ON_6H                       000000DF
 _WRTD_OFF_6H                      000000FF
 _WRTD_ON_6H                       0000007F
