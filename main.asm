@@ -14,16 +14,20 @@ CONFIG	WDT = OFF
 
 LINIASL  EQU 0x01
 LINIASH  EQU 0x02
-COLOR EQU 0x04 ;variable la cual modificamos segun queremos un color o otro
-COLOR2 EQU 0x05 ;variable la cual modificamos segun queremos un color o otro
+COLOR EQU 0x03 ;variable la cual modificamos segun queremos un color o otro
+COLOR2 EQU 0x04 ;variable la cual modificamos segun queremos un color o otro
+FINAL EQU 0x05
 
 ;*************
 ;* CONSTANTS *
 ;*************
+
+NADA EQU 0x12
 ROJO EQU 0x01
 VERDE EQU 0x02
 ROSA EQU 0x05
 BLANCO EQU 0x07
+NEGRO EQU 0x00
 
 ;*********************************
 ; VECTORS DE RESET I INTERRUPCI� *
@@ -116,6 +120,7 @@ COMPRUEBA_LOW
 INIT_VARS
     clrf LINIASL, 0;1
     clrf LINIASH, 0;1
+    clrf FINAL, 0;1
     NOP
     return;2
     
@@ -1065,8 +1070,26 @@ ESPERA_DEU
     NOP
     return
   
-
+	
+	  
+COLOR_FINAL
+    btfsc PORTD, 3, 0 ;miramos el 4t bit para saber si es gameover
+    movff ROJO, FINAL
+    btfsc PORTC, 0, 0 ;miramos el 1r bit para saber si hemos ganado
+    movff VERDE, FINAL
+    movlw 0x01
+    cpfseq FINAL, 0
+    movff NADA, FINAL
+    return
     
+    ;Part important per fer mostrar o no el color
+    ;movlw 0x01
+    ;cpfsgt PORTD, 0 
+    ;movff BLANCO, COLOR 
+    ;movlw 0x02
+    ;cpfslt PORTD, 0 
+    ;movff BLANCO, COLOR 
+    ;movff COLOR, LATA 
 	
 ;*******
 ;* END *
