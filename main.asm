@@ -12,22 +12,19 @@ CONFIG	WDT = OFF
 ;* VARIABLES *
 ;*************
 
-LINIASL  EQU 0x01
-LINIASH  EQU 0x02
-COLOR EQU 0x03 ;variable la cual modificamos segun queremos un color o otro
-COLOR2 EQU 0x04 ;variable la cual modificamos segun queremos un color o otro
-FINAL EQU 0x05
+LINIASL  EQU 0x03
+LINIASH  EQU 0x04
+COLOR EQU 0x05 ;variable la cual modificamos segun queremos un color o otro
+FINAL EQU 0x06
+PORTSD EQU 0x08
 
 ;*************
 ;* CONSTANTS *
 ;*************
 
-NADA EQU 0x12
+BLANCO EQU 0x07
 ROJO EQU 0x01
 VERDE EQU 0x02
-ROSA EQU 0x05
-BLANCO EQU 0x07
-NEGRO EQU 0x00
 
 ;*********************************
 ; VECTORS DE RESET I INTERRUPCI� *
@@ -120,8 +117,13 @@ COMPRUEBA_LOW
 INIT_VARS
     clrf LINIASL, 0;1
     clrf LINIASH, 0;1
-    clrf FINAL, 0;1
-    NOP
+    clrf FINAL, 0
+    movlw 0x01
+    movwf ROJO, 0
+    movlw 0x02
+    movwf VERDE, 0
+    
+    
     return;2
     
 INIT_PORTS
@@ -190,6 +192,7 @@ PRIMERA
     goto LOOP
     
 LOOP
+    call COLOR_FINAL
     movlw 0x00
     cpfsgt LINIASH,0
     goto PRIMERA	    
@@ -305,9 +308,8 @@ ZONA_15
     NOP
     clrf LATA,0 
     NOP
-    call ESPERA_DEU
     NOP
-    call ESPERA_5
+    NOP
     NOP
     NOP
     NOP
@@ -380,8 +382,8 @@ ZONA_14
     NOP
     clrf LATA,0 
     NOP
-    call ESPERA_DEU
-    call ESPERA_DEU
+    NOP
+    call ESPERA_5
     NOP
     NOP
     NOP
@@ -457,8 +459,8 @@ ZONA_13
     
     
     NOP
-    call ESPERA_DEU
-    call ESPERA_DEU
+    NOP
+    call ESPERA_5
     NOP
     NOP
     NOP
@@ -503,18 +505,19 @@ ZONA_12
     call ESPERA_DEU
     clrf LATA,0 
     NOP
-    call ESPERA_DEU
-    call ESPERA_DEU
+    call ESPERA_5
+    NOP
     goto LOOP 
     
 ZONA_11
+    NOP
+    NOP
     movlw 0x03
     call ESPERA_DEU
     movwf LATA,0
     call ESPERA_5
     call ESPERA_5
     call ESPERA_5
-    NOP
     NOP
     NOP
     NOP
@@ -535,7 +538,6 @@ ZONA_11
     NOP
     NOP
     NOP
-    NOP
     call ESPERA_DEU
     NOP
     call ESPERA_5
@@ -544,9 +546,8 @@ ZONA_11
     call ESPERA_5
     call ESPERA_DEU
     call ESPERA_DEU
-    call ESPERA_DEU
     call ESPERA_5
-    call ESPERA_5
+    NOP
     NOP
     NOP
     NOP
@@ -557,8 +558,11 @@ ZONA_11
 ZONA_10
     NOP
     NOP
+    call ESPERA_5
     NOP
-    call ESPERA_DEU
+    NOP
+    NOP
+    call ESPERA_5
     call ESPERA_DEU
     movlw 0x03
     movwf LATA,0
@@ -569,10 +573,6 @@ ZONA_10
     NOP
     NOP
     NOP
-    NOP
-    NOP
-    NOP
-    call ESPERA_5
     call ESPERA_DEU
     call ESPERA_DEU
     call ESPERA_DEU
@@ -602,8 +602,9 @@ ZONA_10
     NOP
     NOP
     call ESPERA_5
+    NOP
     call ESPERA_5
-    call ESPERA_DEU
+    NOP
     call ESPERA_DEU
     call ESPERA_DEU
     goto LOOP        
@@ -611,22 +612,21 @@ ZONA_10
 ZONA_9
     NOP
     NOP
-    NOP
+    call ESPERA_5
     call ESPERA_DEU
-    call ESPERA_DEU
     NOP
     NOP
     NOP
     NOP
+    NOP
+    NOP
+    NOP
+    call ESPERA_5
     movlw 0x03
     movwf LATA,0
     call ESPERA_5
     clrf LATA,0 
     NOP
-    NOP
-    NOP
-    NOP
-    call ESPERA_5
     call ESPERA_DEU
     call ESPERA_DEU
     call ESPERA_DEU
@@ -662,8 +662,9 @@ ZONA_9
     NOP
     NOP
     NOP
+    NOP
+    NOP
     call ESPERA_5
-    call ESPERA_DEU
     call ESPERA_DEU
     goto LOOP   
 
@@ -673,16 +674,19 @@ ZONA_8
     NOP
     NOP
     NOP
-    NOP
+    call ESPERA_DEU
+    call ESPERA_DEU
     call ESPERA_5
-    call ESPERA_DEU
-    call ESPERA_DEU
+    NOP
+    NOP
+    NOP
     movlw 0x03
     movwf LATA,0
     call ESPERA_5
     clrf LATA,0 
+    NOP
+    NOP
     call ESPERA_5
-    call ESPERA_DEU
     call ESPERA_DEU
     call ESPERA_DEU
     call ESPERA_DEU
@@ -704,10 +708,11 @@ ZONA_8
     NOP
     call ESPERA_5
     call ESPERA_DEU
-    call ESPERA_DEU
     NOP
     NOP
     call ESPERA_5
+    NOP
+    NOP
     NOP
     NOP
     goto LOOP
@@ -718,16 +723,20 @@ ZONA_7
     NOP
     call ESPERA_DEU
     call ESPERA_DEU
-    call ESPERA_DEU
+    call ESPERA_5
+    NOP
+    call ESPERA_5
+    NOP
     NOP
     NOP
     movlw 0x03
     movwf LATA,0
     call ESPERA_5
     clrf LATA,0 
-    call ESPERA_5
     NOP
-    call ESPERA_DEU
+    NOP
+    NOP
+    call ESPERA_5
     call ESPERA_DEU
     call ESPERA_DEU
     call ESPERA_DEU
@@ -748,12 +757,13 @@ ZONA_7
     clrf LATA,0 
     call ESPERA_DEU
     call ESPERA_DEU
-    call ESPERA_DEU
     call ESPERA_5
     NOP
     NOP
     NOP
+    NOP
     call ESPERA_5
+    NOP
     NOP
     NOP
     NOP
@@ -767,18 +777,15 @@ ZONA_6
     NOP
     NOP
     NOP
-    call ESPERA_DEU
+    NOP
     call ESPERA_5
     call ESPERA_5
-    movlw 0x03
-    movwf LATA,0
+    movlw 0x00
+    cpfsgt PORTSD, 0 
+    clrf COLOR, 0
+    movff COLOR, LATA
     call ESPERA_5
     clrf LATA,0 
-    call ESPERA_5
-    NOP
-    NOP
-    NOP
-    NOP
     NOP
     NOP
     NOP
@@ -795,10 +802,10 @@ ZONA_6
     call ESPERA_DEU
     call ESPERA_DEU
     call ESPERA_DEU
-    NOP
-    NOP
-    NOP
-    movwf LATA,0
+    movlw 0x04
+    cpfsgt PORTSD, 0 
+    clrf COLOR, 0
+    movff COLOR, LATA
     call ESPERA_5
     NOP
     NOP
@@ -824,32 +831,34 @@ ZONA_5
     NOP
     NOP
     call ESPERA_DEU
-    call ESPERA_DEU
+    NOP
+    NOP
+    NOP
     call ESPERA_5
-    NOP
-    NOP
-    movlw 0x03
-    movwf LATA,0
+    movlw 0x00
+    cpfseq FINAL, 0 
+    clrf COLOR, 0
+    movff COLOR, LATA 
     call ESPERA_5
     clrf LATA,0 
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
+    call ESPERA_DEU
     call ESPERA_5
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
     NOP
     NOP
     NOP
-    NOP
-    NOP
-    movwf LATA,0
+    movlw 0x00
+    cpfseq FINAL, 0 
+    clrf COLOR, 0
+    movff COLOR, LATA 
     call ESPERA_5
     NOP
     NOP
@@ -866,6 +875,7 @@ ZONA_5
     call ESPERA_5
     NOP
     goto LOOP
+
     
 
 ZONA_4
@@ -873,11 +883,14 @@ ZONA_4
     NOP
     NOP
     call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
     NOP
-    movlw 0x03
-    movwf LATA,0
+    call ESPERA_5
+    NOP
+    call ESPERA_5
+    movlw 0x00
+    cpfsEQ FINAL, 0 
+    clrf COLOR, 0
+    movff COLOR, LATA 
     call ESPERA_5
     clrf LATA,0 
     call ESPERA_DEU
@@ -892,10 +905,14 @@ ZONA_4
     call ESPERA_DEU
     call ESPERA_DEU
     call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_5
-    movlw 0x03
-    movwf LATA,0
+    NOP
+    NOP
+    NOP
+    NOP
+    movlw 0x00
+    cpfsEQ FINAL, 0 
+    clrf COLOR, 0
+    movff COLOR, LATA 
     call ESPERA_5
     NOP
     NOP
@@ -908,6 +925,8 @@ ZONA_4
     NOP
     NOP    
     goto LOOP
+    
+    
 
 ZONA_3
     NOP
@@ -915,10 +934,12 @@ ZONA_3
     NOP
     call ESPERA_DEU
     call ESPERA_DEU
-    call ESPERA_DEU
+    NOP
     call ESPERA_5
-    movlw 0x03
-    movwf LATA,0
+    movlw 0x00
+    cpfsgt PORTSD, 0 
+    clrf COLOR, 0
+    movff COLOR, LATA
     call ESPERA_5
     clrf LATA,0 
     NOP
@@ -933,14 +954,14 @@ ZONA_3
     call ESPERA_DEU
     call ESPERA_DEU
     call ESPERA_DEU
-    call ESPERA_DEU
     call ESPERA_5
     NOP
     NOP
     NOP
-    NOP
     movlw 0x03
-    movwf LATA,0
+    cpfsgt PORTSD, 0 
+    clrf COLOR, 0
+    movff COLOR, LATA 
     call ESPERA_5
     call ESPERA_5
     call ESPERA_5
@@ -960,16 +981,17 @@ ZONA_3
 ZONA_2
     NOP
     NOP
+    NOP
+    call ESPERA_5
     call ESPERA_DEU
     call ESPERA_DEU
-    call ESPERA_DEU
-    call ESPERA_DEU
-    movlw 0x03
-    movwf LATA,0
+    call ESPERA_5
+    movlw 0x00
+    cpfsgt PORTSD, 0 
+    clrf COLOR, 0
+    movff COLOR, LATA
     call ESPERA_5
     clrf LATA,0 
-    NOP
-    call ESPERA_DEU
     call ESPERA_DEU
     call ESPERA_DEU
     call ESPERA_DEU
@@ -985,8 +1007,10 @@ ZONA_2
     call ESPERA_5
     NOP
     NOP
-    movlw 0x03
-    movwf LATA,0
+    movlw 0x02
+    cpfsgt PORTSD, 0 
+    clrf COLOR, 0
+    movff COLOR, LATA 
     NOP
     NOP
     clrf LATA,0 
@@ -998,17 +1022,14 @@ ZONA_2
     goto LOOP
     
 LINEA_ZONA1
-    NOP
-    NOP
+    call ESPERA_5
     call ESPERA_DEU
     call ESPERA_DEU
     call ESPERA_DEU
-    call ESPERA_DEU
+    movlw 0x07
+    movwf COLOR
     NOP
-    NOP
-    NOP
-    movlw 0x03
-    movwf LATA,0
+    movff COLOR, LATA 
     NOP
     NOP
     call ESPERA_5
@@ -1031,10 +1052,6 @@ LINEA_ZONA1
     call ESPERA_DEU
     call ESPERA_DEU
     call ESPERA_DEU
-    call ESPERA_5
-    NOP
-    NOP
-    NOP
     goto LOOP
     
     
@@ -1077,19 +1094,19 @@ COLOR_FINAL
     movff ROJO, FINAL
     btfsc PORTC, 0, 0 ;miramos el 1r bit para saber si hemos ganado
     movff VERDE, FINAL
-    movlw 0x01
-    cpfseq FINAL, 0
-    movff NADA, FINAL
+    movlw 0x00 
+    cpfsgt FINAL, 0
+    movlw BLANCO
+    movwf COLOR, 0
     return
-    
-    ;Part important per fer mostrar o no el color
-    ;movlw 0x01
-    ;cpfsgt PORTD, 0 
-    ;movff BLANCO, COLOR 
-    ;movlw 0x02
-    ;cpfslt PORTD, 0 
-    ;movff BLANCO, COLOR 
-    ;movff COLOR, LATA 
+        
+     
+CANVI_COLOR
+    movlw 0x02
+    cpfslt PORTD, 0 
+    clrf COLOR
+    movff COLOR, LATA 
+    return
 	
 ;*******
 ;* END *
