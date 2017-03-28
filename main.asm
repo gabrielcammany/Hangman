@@ -16,8 +16,7 @@ LINIASL  EQU 0x03
 LINIASH  EQU 0x04
 COLOR EQU 0x05 ;variable la cual modificamos segun queremos un color o otro
 FINAL EQU 0x06
-PORTSD EQU 0x08
-PORTSC EQU 0x09
+AUX EQU 0x09
 
 ;*************
 ;* CONSTANTS *
@@ -106,7 +105,7 @@ COMPRUEBA_FINAL
 COMPRUEBA_LOW
     movlw 0x7F;1-Compensamos el periodo de vSync
     cpfslt LINIASL,0;2
-    call INIT_VARS;2
+    call Espera_Nou;2
     
     cpfsgt LINIASL,0
     call ESPERA_IVARS;vr5
@@ -115,22 +114,41 @@ COMPRUEBA_LOW
 ;****************************
 ;* MAIN I RESTA DE FUNCIONS *
 ;****************************
+
+Espera_Nou
+    clrf LINIASL, 0;1
+    clrf LINIASH, 0;1
+    NOP
+    NOP
+    NOP 
+    NOP
+    return
+    
 INIT_VARS
     clrf LINIASL, 0;1
     clrf LINIASH, 0;1
     clrf FINAL, 0
-    movlw 0x07
-    movwf PORTSD, 0
-    movlw 0x01
-    movwf PORTSC, 0
+    nop
+    ;NOP
+    NOP 
     return;2
     
 INIT_PORTS
-    clrf TRISA, 0
-    movlw 0x08
-    movwf TRISE, 0
-    setf TRISC, 0
-    setf TRISD, 0
+    ;clrf TRISA, 0
+    bcf TRISA, 0, 0	;Red
+    bcf TRISA, 1, 0	;Green
+    bcf TRISA, 2, 0	;Blue
+    ;movlw 0x08
+    ;movwf TRISE, 0
+    bcf TRISE, 0, 0	;HSync
+    bcf TRISE, 1, 0	;VSync
+    ;setf TRISC, 0
+    ;setf TRISD, 0
+    bsf TRISC, 0, 0	;PartidaGuanyada
+    bsf TRISD, 0, 0	;NumErrors[0]
+    bsf TRISD, 1, 0	;NumErrors[1]
+    bsf TRISD, 2, 0	;NumErrors[2]
+    bsf TRISD, 3, 0	;NumErrors[3]
     return
     
 INIT_TIMER
@@ -515,7 +533,7 @@ ZONA_11
     NOP
     NOP
     movlw 0x00
-    cpfsgt PORTSD, 0 
+    cpfsgt PORTD, 0 
     clrf COLOR, 0
     movff COLOR, LATA
     call ESPERA_5
@@ -565,7 +583,7 @@ ZONA_10
     call ESPERA_5
     call ESPERA_DEU
     movlw 0x00
-    cpfsgt PORTSD, 0 
+    cpfsgt PORTD, 0 
     clrf COLOR, 0
     movff COLOR, LATA
     call ESPERA_5
@@ -622,7 +640,7 @@ ZONA_9
     NOP
     call ESPERA_5
     movlw 0x00
-    cpfsgt PORTSD, 0 
+    cpfsgt PORTD, 0 
     clrf COLOR, 0
     movff COLOR, LATA
     call ESPERA_5
@@ -642,7 +660,7 @@ ZONA_9
     NOP
     NOP
     movlw 0x07
-    cpfsgt PORTSD, 0 
+    cpfsgt PORTD, 0 
     clrf COLOR, 0
     movff COLOR, LATA
     call ESPERA_5
@@ -654,7 +672,7 @@ ZONA_9
     NOP
     NOP
     movlw 0x07
-    cpfsgt PORTSD, 0 
+    cpfsgt PORTD, 0 
     clrf COLOR, 0
     movff COLOR, LATA
     call ESPERA_5
@@ -681,7 +699,7 @@ ZONA_8
     call ESPERA_DEU
     call ESPERA_5
     movlw 0x00
-    cpfsgt PORTSD, 0 
+    cpfsgt PORTD, 0 
     clrf COLOR, 0
     movff COLOR, LATA
     call ESPERA_5
@@ -701,7 +719,7 @@ ZONA_8
     call ESPERA_DEU
     call ESPERA_DEU 
     movlw 0x06
-    cpfsgt PORTSD, 0 
+    cpfsgt PORTD, 0 
     clrf COLOR, 0
     movff COLOR, LATA
     call ESPERA_DEU
@@ -732,7 +750,7 @@ ZONA_7
     NOP
     call ESPERA_5
     movlw 0x00
-    cpfsgt PORTSD, 0 
+    cpfsgt PORTD, 0 
     clrf COLOR, 0
     movff COLOR, LATA
     call ESPERA_5
@@ -754,7 +772,7 @@ ZONA_7
     call ESPERA_DEU
     call ESPERA_DEU 
     movlw 0x04
-    cpfsgt PORTSD, 0 
+    cpfsgt PORTD, 0 
     clrf COLOR, 0
     movff COLOR, LATA
     call ESPERA_5
@@ -788,7 +806,7 @@ ZONA_6
     call ESPERA_5
     call ESPERA_5
     movlw 0x00
-    cpfsgt PORTSD, 0 
+    cpfsgt PORTD, 0 
     clrf COLOR, 0
     movff COLOR, LATA
     call ESPERA_5
@@ -810,7 +828,7 @@ ZONA_6
     call ESPERA_DEU
     call ESPERA_DEU
     movlw 0x04
-    cpfsgt PORTSD, 0 
+    cpfsgt PORTD, 0 
     clrf COLOR, 0
     movff COLOR, LATA
     call ESPERA_5
@@ -843,7 +861,7 @@ ZONA_5
     NOP
     call ESPERA_5
     movlw 0x00
-    cpfsgt PORTSD, 0 
+    cpfsgt PORTD, 0 
     clrf COLOR, 0
     movff COLOR, LATA 
     call ESPERA_5
@@ -863,10 +881,10 @@ ZONA_5
     NOP
     NOP
     movlw 0x04
-    cpfsgt PORTSD, 0 
+    cpfsgt PORTD, 0 
     clrf COLOR, 0
     movlw 0x06
-    cpfslt PORTSD, 0 
+    cpfslt PORTD, 0 
     goto ZONA_5_SIN
     call ESPERA_5
     NOP
@@ -924,7 +942,7 @@ ZONA_4
     NOP
     call ESPERA_5
     movlw 0x00
-    cpfsgt PORTSD, 0 
+    cpfsgt PORTD, 0 
     clrf COLOR, 0
     movff COLOR, LATA 
     call ESPERA_5
@@ -946,7 +964,7 @@ ZONA_4
     NOP
     NOP
     movlw 0x04
-    cpfsgt PORTSD, 0 
+    cpfsgt PORTD, 0 
     clrf COLOR, 0
     movff COLOR, LATA 
     call ESPERA_5
@@ -973,7 +991,7 @@ ZONA_3
     NOP
     call ESPERA_5
     movlw 0x00
-    cpfsgt PORTSD, 0 
+    cpfsgt PORTD, 0 
     clrf COLOR, 0
     movff COLOR, LATA
     call ESPERA_5
@@ -995,7 +1013,7 @@ ZONA_3
     NOP
     NOP
     movlw 0x03
-    cpfsgt PORTSD, 0 
+    cpfsgt PORTD, 0 
     clrf COLOR, 0
     movff COLOR, LATA 
     call ESPERA_5
@@ -1023,7 +1041,7 @@ ZONA_2
     call ESPERA_DEU
     call ESPERA_5
     movlw 0x00
-    cpfsgt PORTSD, 0 
+    cpfsgt PORTD, 0 
     clrf COLOR, 0
     movff COLOR, LATA
     call ESPERA_5
@@ -1044,7 +1062,7 @@ ZONA_2
     NOP
     NOP
     movlw 0x02
-    cpfsgt PORTSD, 0 
+    cpfsgt PORTD, 0 
     clrf COLOR, 0
     movff COLOR, LATA 
     NOP
@@ -1067,7 +1085,7 @@ LINEA_ZONA1
     call ESPERA_DEU
     call ESPERA_DEU
     movlw 0x01
-    cpfsgt PORTSD, 0 
+    cpfsgt PORTD, 0 
     clrf COLOR, 0
     movff COLOR, LATA
     NOP
@@ -1097,6 +1115,7 @@ LINEA_ZONA1
     NOP
     NOP
     NOP
+    nop
     goto LOOP
     
     
@@ -1135,16 +1154,16 @@ ESPERA_DEU
 	
 	  
 COLOR_FINAL
-    movlw BLANCO
-    btfsc PORTSD, 3, 0 ;miramos el 4t bit para saber si es gameover
-    movlw ROJO
-    btfsc PORTSC, 0, 0 ;miramos el 1r bit para saber si hemos ganado
-    movlw VERDE
-    movwf COLOR, 0
-    NOP
-    NOP
-    NOP
-    NOP
+    movlw BLANCO ;1 1 1
+    btfsc PORTC, 0, 0;2 1 2 
+    movlw VERDE ;0 1 0
+    btfsc PORTD, 3, 0 ;1 2 2
+    movlw ROJO ;1 0 0
+    movwf COLOR, 0 ;1 1 1
+    NOP ;1 
+    NOP ;1
+    NOP ;1
+    NOP ;1
     return
       
 	
