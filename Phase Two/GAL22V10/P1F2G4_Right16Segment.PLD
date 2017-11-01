@@ -1,0 +1,109 @@
+Name     P1F2G4;
+PartNo   00 ;
+Date     10/10/2016 ;
+Revision 01 ;
+Designer ls30652_XXXXX ;
+Company  La Salle ;
+Assembly None ;
+Location Barcelona ;
+Device   g22v10 ;
+
+PIN 1 = t;
+PIN [6..2] = A, B, C, D, E;
+PIN 7 = Z0;
+PIN 8 = Z1;
+PIN 9 = Z2;
+PIN 10 = Edisplay;
+PIN 11 = Igirada;
+PIN 13 = Valor;
+
+/*Terminals de sortida */
+PIN 17 = !se;
+PIN 18 = !sd;
+PIN 19 = !sr;
+PIN 20 = !sp;
+PIN 21 = !sc;
+PIN 22 = !sn;
+PIN 16 = !sb;
+PIN 14 = Tload;
+PIN 15 = !Rlld;
+PIN 23 = !Sult;
+
+/*Declaracions */
+
+FIELD entradas = [Valor,Igirada,A,B,E,D,C];
+FIELD salidas = [Ase,Asd,Asr,Asp,Asc,Asn,Asb]; 
+
+se = ((Ase # (!Igirada & Valor)) # se) & (Edisplay) ;
+sd = ((Asd) # (sd)) & (Edisplay);
+sr = ((Asr) # (sr)) & (Edisplay);
+sp = ((Asp) # (sp)) & (Edisplay); 
+sc = ((Asc) # (sc)) & (Edisplay); 
+sn = ((Asn) # (sn)) & (Edisplay); 
+sb = ((Asb) # (sb)) & (Edisplay); 
+
+es2 = !Z2 &  Z1 & !Z0;
+es0 = !Z2 & !Z1 & !Z0;
+es6 =  Z2 &  Z1 & !Z0;
+es7 =  Z2 &  Z1 &  Z0;
+
+Tload = es2 & t;
+Rlld = es6 # es0;
+Sult = es7;
+
+TABLE entradas => salidas { 
+'b'1100000 => 'b' 0001000;
+
+'b'1100001 => 'b' 0101101; /*   A                              */ 
+
+'b'1100010 => 'b' 1101101; /*   B                              */
+
+'b'1100011 => 'b' 1000001; /*   C                             */
+
+'b'1100100 => 'b' 1100101; /*   D                             */
+
+'b'1100101 => 'b' 1000001; /*   E                              */
+
+'b'1100110 => 'b' 0000001; /*   F                              */
+
+'b'1100111 => 'b' 1101001; /*   G                              */
+
+'b'1101000 => 'b' 0101100; /*   H                              */
+
+'b'1101001 => 'b' 1000001; /*   I                              */
+
+'b'1101010 => 'b' 1100100; /*   J                              */
+
+'b'1101011 => 'b' 0010010; /*   K                              */
+
+'b'1101100 => 'b' 1000000; /*   L                              */
+
+'b'1101101 => 'b' 0100100; /*   M                              */
+
+'b'1101110 => 'b' 0110100; /*   N                              */
+
+'b'1101111 => 'b' 1100101; /*   O                              */
+
+'b'1110000 => 'b' 0001101; /*   P                              */
+
+'b'1110001 => 'b' 1110101; /*   Q                              */
+
+'b'1110010 => 'b' 0011101; /*   R                              */
+
+'b'1110011 => 'b' 1101001; /*   S                              */
+
+'b'1110100 => 'b' 0000001; /*   T                              */
+
+'b'1110101 => 'b' 1100100; /*   U                              */
+
+'b'1110110 => 'b' 0000010; /*   V                              */
+
+'b'1110111 => 'b' 0110100; /*   W                              */
+
+'b'1111000 => 'b' 0010010; /*   X                              */
+
+'b'1111001 => 'b' 0000010; /*   Y                              */
+
+'b'1111010 => 'b' 1000011; /*   Z                              */
+ }
+

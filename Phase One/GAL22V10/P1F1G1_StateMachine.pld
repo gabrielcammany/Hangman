@@ -1,0 +1,53 @@
+Name     P1F1G1 ;
+PartNo   00 ;
+Date     10/10/2016 ;
+Revision 01 ;
+Designer ls30652_XXXXX ;
+Company  La Salle ;
+Assembly None ;
+Location Barcelona ;
+Device   g22v10 ;
+
+/* *************** INPUT PINS *********************/
+PIN  1   = 	    t    		;
+PIN  2   =        Q0              	; /*                                 */ 
+PIN  3   =        Q1           	; /*                                 */ 
+PIN  4   =        Q2              	; /*                                 */ 
+PIN  5   =        hht          	; /*                                 */ 
+PIN  6   =        Nt               ; /*                                 */ 
+PIN  7   =        2s               ; /*                                 */ 
+PIN  8   =        lg            	; /*                                 */ 
+PIN  9	  =	    Tprem            ;
+/* *************** OUTPUT PINS *********************/
+PIN  14   =       D0                  ; /*                                 */ 
+PIN  15   =       D1                  ; /*                                 */ 
+PIN  16   =       D2                  ; /*                                    */ 
+PIN  18   =       Tprim			;       
+PIN  19   =       Tact                  ; /*                                 */ 
+PIN  20   =       R2s                  ; /*                                 */ 
+PIN  21   =       Tll                  ; /*                                 */ 
+PIN  22   =       Thht                  ;
+PIN  23   =       !Nrhht     	;          
+
+/* ************** EQUACIONS ***********************/
+ 
+e0 = !Q2 & !Q1 & !Q0;
+e1 = !Q2 & !Q1 &  Q0;
+e2 = !Q2 &  Q1 & !Q0;
+e3 = !Q2 &  Q1 &  Q0;
+e4 =  Q2 & !Q1 & !Q0;
+e5 =  Q2 & !Q1 &  Q0;
+e6 =  Q2 & Q1 &  !Q0;
+e7 =  Q2 & Q1 &   Q0;
+
+D0 = e1 & !hht # e7 & Nt # e0 # e2 & !Tprem # e3 & !hht # e6 # e4 & !Tprem # e3 & 2s # e7 & !Nt;
+D1 = e2 & Tprem # e1 & hht # e3 & !Tprem # e5 & lg # e2 & !Tprem # e6 # e5 & !lg # e3 & 2s # e7 & !Nt;
+D2 = e3 & hht & !2s # e4 & !Tprem # e4 & Tprem # e5 & !lg # e3 & 2s # e7 & !Nt;
+
+
+Tprim = e2&!t;
+Tact = (e2 # e5) &!t;
+R2s = e2 # e6;
+Tll = e6 &!t;
+Thht = e7&!t;
+Nrhht = e2 # e5;

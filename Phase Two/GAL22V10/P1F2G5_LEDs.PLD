@@ -1,0 +1,54 @@
+Name     P1F2G5 ;
+PartNo   00 ;
+Date     10/10/2016 ;
+Revision 01 ;
+Designer ls30652_XXXXX ;
+Company  La Salle ;
+Assembly None ;
+Location Barcelona ;
+Device   g22v10 ;
+
+/* *************** INPUT PINS *********************/
+
+PIN  5	  =	   Lletra1            ;
+PIN  6	  =	   Lletra2            ;
+PIN  7	  =	   Lletra3            ;                                   
+PIN  8	  =	   Igual              ;
+PIN  9   =        Nfi                ;  
+PIN  10   =       fGal			;                                 
+PIN  11   =       PCI			;
+
+/* *************** OUTPUT PINS *********************/
+PIN  15   = 	   oLED0    		;
+PIN  22   =       oLED1              	; /*                                 */ 
+PIN  21   =       oLED2           	; /*                                 */ 
+PIN  20   =       oLED3              	; /*                                 */ 
+PIN  19   =       oLED4          	; /*                                 */ 
+PIN  18   =       oLED5               ; /*                                 */ 
+PIN  17   =       oLED6               ; /*                                 */ 
+PIN  16   =       oLED7             	; /*                                 */ 
+PIN  14   =       FiJoc             	; /*                                 */ 
+PIN  23   =	   Nrll			;
+
+/* ************** EQUACIONS ***********************/
+ 
+Nrll  = PCI & fGal;
+FiJoc = !(oLED0 # oLED1 # oLED2 # oLED3 # oLED4 # oLED5 # oLED6 # oLED7);
+
+LED0 = !Lletra3 & !Lletra2 & !Lletra1; 
+LED1 = !Lletra3 & !Lletra2 &  Lletra1; 
+LED2 = !Lletra3 &  Lletra2 & !Lletra1; 
+LED3 = !Lletra3 &  Lletra2 &  Lletra1;
+LED4 =  Lletra3 & !Lletra2 & !Lletra1;
+LED5 =  Lletra3 & !Lletra2 &  Lletra1;
+LED6 =  Lletra3 &  Lletra2 & !Lletra1;
+LED7 =  Lletra3 &  Lletra2 &  Lletra1;
+
+oLED0 = PCI & (((Nfi & LED0) # (oLED0)) & !(Igual & LED0 & Nfi));
+oLED1 = PCI & (((Nfi & LED1) # (oLED1)) & !(Igual & LED1 & Nfi));
+oLED2 = PCI & (((Nfi & LED2) # (oLED2)) & !(Igual & LED2 & Nfi));
+oLED3 = PCI & (((Nfi & LED3) # (oLED3)) & !(Igual & LED3 & Nfi));  
+oLED4 = PCI & (((Nfi & LED4) # (oLED4)) & !(Igual & LED4 & Nfi));  
+oLED5 = PCI & (((Nfi & LED5) # (oLED5)) & !(Igual & LED5 & Nfi));  
+oLED6 = PCI & (((Nfi & LED6) # (oLED6)) & !(Igual & LED6 & Nfi));  
+oLED7 = PCI & (((Nfi & LED7) # (oLED7)) & !(Igual & LED7 & Nfi));

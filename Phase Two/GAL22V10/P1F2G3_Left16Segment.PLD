@@ -1,0 +1,109 @@
+Name     P1F2G3 ;
+PartNo   00 ;
+Date     10/10/2016 ;
+Revision 01 ;
+Designer ls30652_XXXXX ;
+Company  La Salle ;
+Assembly None ;
+Location Barcelona ;
+Device   g22v10 ;
+
+PIN [7..11] = A, B, C, D, E;
+PIN 6 = Z2;
+PIN 5 = Z1;
+PIN 4 = Z0;
+PIN 3 = Edisplay;
+PIN 2 = Igirada;
+PIN 13 = Valor;
+
+/*Terminales de salida */
+PIN 23 = !sa;
+PIN 22 = !sk; 
+PIN 21 = !sm;
+PIN 20 = !sh;
+PIN 19 = !su;
+PIN 18 = !ss;
+PIN 17 = !st;
+PIN 16 = !sg;
+PIN 15 = !sf;
+
+PIN 14 = !NrcomptSeg;
+/*Declaracions */
+
+/*Ecuaciones booleanas */
+
+sa = ((Asa) # (sa)) &  (Edisplay);
+sm = ((Asm) # (sm)) &  (Edisplay);
+sk = ((Ask) # (sk)) &  (Edisplay);
+sh = ((Ash) # (sh)) &  (Edisplay); 
+su = ((Asu) # (su)) &  (Edisplay); 
+ss = ((Ass) # (ss)) &  (Edisplay); 
+st = ((Ast) # (st)) &  (Edisplay); 
+sg = ((Asg) # (sg)) &  (Edisplay);
+sf = ((Asf # (!Igirada & Valor)) # (sf)) & (Edisplay);
+
+es2 = !Z2 &  Z1 & !Z0;
+es5 =  Z2 & !Z1 &  Z0;
+
+
+NrcomptSeg = es2 # es5;
+
+FIELD entradas = [Valor, Igirada, A,B,E,D,C];
+FIELD salidas = [Asa,Asm,Ask,Ash,Asu,Ass,Ast,Asg,Asf]; 
+
+TABLE entradas => salidas {
+'b'1100000 => 'b' 000010000;
+
+'b'1100001 => 'b' 100110010; /*   A                              */ 
+
+'b'1100010 => 'b' 110001001; /*   B                              */
+
+'b'1100011 => 'b' 100100011; /*   C                              */
+
+'b'1100100 => 'b' 110001001; /*   D                              */
+
+'b'1100101 => 'b' 100110011; /*   E                              */
+
+'b'1100110 => 'b' 100110010; /*   F                              */
+
+'b'1100111 => 'b' 100100011; /*   G                              */
+
+'b'1101000 => 'b' 000110010; /*   H                              */
+
+'b'1101001 => 'b' 110001001; /*   I                              */
+
+'b'1101010 => 'b' 000000011; /*   J                              */
+
+'b'1101011 => 'b' 000110010; /*   K                              */
+
+'b'1101100 => 'b' 000100011; /*   L                              */
+
+'b'1101101 => 'b' 010101010; /*   M                              */
+
+'b'1101110 => 'b' 001100010; /*   N                              */
+
+'b'1101111 => 'b' 100100011; /*   O                              */
+
+'b'1110000 => 'b' 100110010; /*   P                              */
+
+'b'1110001 => 'b' 100100011; /*   Q                              */
+
+'b'1110010 => 'b' 100110010; /*   R                              */
+
+'b'1110011 => 'b' 101000001; /*   S                              */
+
+'b'1110100 => 'b' 110001000; /*   T                              */
+
+'b'1110101 => 'b' 100000011; /*   U                              */
+
+'b'1110110 => 'b' 000100110; /*   V                              */
+
+'b'1110111 => 'b' 000100110; /*   W                              */
+
+'b'1111000 => 'b' 001000100; /*   X                              */
+
+'b'1111001 => 'b' 001001000; /*   Y                              */
+
+'b'1111010 => 'b' 100000101; /*   Z                              */
+
+ }

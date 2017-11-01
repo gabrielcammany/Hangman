@@ -1,0 +1,79 @@
+Name     P1F2G1 ;
+PartNo   00 ;
+Date     23/11/2016 ;
+Revision 01 ;
+Designer ls30652_ls30759;
+Company  La Salle ;
+Assembly None ;
+Location Barcelona ;
+Device   g22v10 ;
+
+/* *************** INPUT PINS *********************/
+PIN  1   = 	   t;
+PIN  8   =        Q0;
+PIN  9   =        Q1;
+PIN  10   =       Q2;
+PIN  11   =       Q3;
+PIN  6   =        PCI;
+PIN  7   =        HHT;
+PIN  4   =        I;
+PIN  2   =        Ulti;
+PIN  5  =	   GameOver;
+PIN  3  =  	   FiJoc;
+PIN 13  =   	   Tload;
+
+/* *************** OUTPUT PINS *********************/
+PIN  17   =       D3;
+PIN  15   =       D2;
+PIN  16   =       D1;
+PIN  19   =       D0;
+PIN  14   =  	   Tll;  
+PIN  18   =      !Nrll;  
+PIN  20   =      !Ocupada;
+PIN  22   =       Igirada;
+PIN  21   =      !Nroc;
+PIN  23   =       Nfi;       
+
+/* ************** EQUACIONS ***********************/
+ 
+e0 =  !Q3 & !Q2 & !Q1 & !Q0;
+e1 =  !Q3 & !Q2 & !Q1 &  Q0;
+e2 =  !Q3 & !Q2 &  Q1 & !Q0;
+e3 =  !Q3 & !Q2 &  Q1 &  Q0;
+e4 =  !Q3 &  Q2 & !Q1 & !Q0;
+e5 =  !Q3 &  Q2 & !Q1 &  Q0;
+e6 =  !Q3 &  Q2 &  Q1 & !Q0;
+e7 =  !Q3 &  Q2 &  Q1 &  Q0;
+e8 =   Q3 & !Q2 & !Q1 & !Q0;
+e9 =   Q3 & !Q2 & !Q1 &  Q0;
+e10 =  Q3 & !Q2 &  Q1 & !Q0;
+e11 =  Q3 & !Q2 &  Q1 &  Q0;
+e12 =  Q3 &  Q2 & !Q1 & !Q0;
+e13 =  Q3 &  Q2 & !Q1 &  Q0;
+
+D0 = (estat1 # estat3 # estat5  # estat7  # estat9 # estat11 # estat13) & !estat0; 
+D1 = (estat2 # estat3 # estat6  # estat7  # estat10 # estat11)         & !estat0;
+D2 = (estat4 # estat5 # estat6  # estat7  # estat12 # estat13)                   & !estat0;
+D3 = (estat8 # estat9 # estat10 # estat11 # estat12 # estat13)                 & !estat0;
+
+estat0 = (e0 & PCI);
+estat1 = ((e0 & !PCI) # e3);
+estat2 = (e1);
+estat3 = (e2 & !Ulti);
+estat4 = (e2 & Ulti);
+estat5 = (e5 & !HHT # (e4) # (e9 & !GameOver & !FiJoc & !PCI));
+estat6 = (e5 & HHT) # (e11);
+estat7 = (e6 & I);
+estat8 = (e7);
+estat9 = (e8 & Ulti) # (e12);
+estat10 = (e6 & !I);
+estat11 = (e10 & !Ulti) # (e8 & !Ulti);
+estat12 = (e10 & Ulti);
+estat13 = ((e9 & (GameOver # FiJoc)) # (e13 & !PCI));
+ 
+Tll = (e3 & t) # e11 # (Tload);
+Ocupada = e0 # (e6 & t);
+Igirada = e7 # e8;
+Nroc = e4 # e9;
+Nfi = (e4 & !t) # (e3 & !t) # (e7 & t) # e12;
+Nrll = (e4 & t) # e9 # HHT;
