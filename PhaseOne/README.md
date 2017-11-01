@@ -3,12 +3,12 @@
 The main objective in this phase is to interact with the user and communicate with the next phase in order to process the 
 game logic.
 
-![ScreenShot](diagram.jpg)
+![ScreenShot](images/diagram.jpg)
 
 ## Time Diagram
 The time diagram of the signals both generated or recieved, is shown below
 
-![ScreenShot](TimeDiagram.PNG)
+![ScreenShot](images/TimeDiagram.PNG)
 
 Although it is in catalan, signals are translated as:
 * HiHaTecla - Key is pressed
@@ -41,4 +41,4 @@ and the excessive image processing the phone did, messed it up)
 The paper covering the EPROM is used to protect data integrity, as they are erased with ultra-violet light and 
 in some cases data gets corrupted even with normal lighting.
 
-![ScreenShot](PhaseOne.jpg)
+![ScreenShot](images/PhaseOne.jpg)
