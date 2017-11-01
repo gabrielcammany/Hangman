@@ -3,12 +3,12 @@
 The main objective in this phase is to interact with the user and communicate with the next phase in order to process the 
 game logic.
 
-![ScreenShot](PhaseOne/diagram.jpg)
+![ScreenShot](diagram.jpg)
 
 ## Time Diagram
 The time diagram of the signals both generated or recieved, is shown below
 
-![ScreenShot](PhaseOne/TimeDiagram.PNG)
+![ScreenShot](TimeDiagram.PNG)
 
 Although it is in catalan, signals are translated as:
 * HiHaTecla - Key is pressed
@@ -31,4 +31,4 @@ Also, have in mind that a key is only send after 2 seconds have passed since it 
 
 ### Electric Shema
 
-![ScreenShot](PhaseOne/ElectricSchemeProteus/Phase1.BMP)
+![ScreenShot](ElectricSchemeProteus/Phase1.BMP)
