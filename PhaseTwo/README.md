@@ -7,14 +7,15 @@ The visual part of the game, will consist of two blocks
 
 ### LEDs ###
 Eight LEDs will show the letters that have been guessed or are still unknown, so when the LED is on, the player hasn't guess it and when it's off, the user has guess it correctlly.
+![ScreenShot](images/LEDsLogic.PNG)
 
 ### 16 Segment ###
 The 16 segment will be in charge of showing the entire word like a circular array. As shown below for the word "Hola"
-![ScreenShot](DisplayLogic.PNG)
+![ScreenShot](images/DisplayLogic.PNG)
 
 ## Input/Output diagram
 
-![ScreenShot](Diagram.jpg)
+![ScreenShot](images/Diagram.jpg)
 
 Most important signals:
 ### Outputs ###
@@ -30,12 +31,12 @@ This inputs are from phase one.
 ## State Machine One
 This is the main state machine that controlls the logic of the game. 
 
-![ScreenShot](StateMachineOne.jpg)
+![ScreenShot](images/StateMachineOne.jpg)
 
 ## State Machine Two
 This auxiliar state machine, is used to show the letter to the 16 segment cyclically.
 
-![ScreenShot](StateMachineTwo.jpg)
+![ScreenShot](images/StateMachineTwo.jpg)
 
 ## Integrated Circuits Used
 * High Performance CMOS EPROM in order to select a random word. 
@@ -58,4 +59,4 @@ Finally, this picture shows how does the Phase Two looks once its soldered. As w
 
 As said in the past phase, the paper covering the EPROM is used to protect data integrity, as they are erased with ultra-violet light and in some cases data gets corrupted even with normal lighting.
 
-![ScreenShot](PhaseTwo&Three.jpg)
+![ScreenShot](images/PhaseTwo&Three.jpg)
