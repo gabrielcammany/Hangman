@@ -32,3 +32,10 @@ Also, have in mind that a key is only send after 2 seconds have passed since it 
 ### Electric Shema
 
 ![ScreenShot](ElectricSchemeProteus/Phase1.BMP)
+
+## Board
+
+Finally, this picture shows how does the Phase One looks once its soldered. (Sorry for the bad image quality, the bad lighting
+and the excessive image processing the phone did, messed it up)
+
+![ScreenShot](PhaseOne.jpg)
