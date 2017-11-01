@@ -38,4 +38,7 @@ Also, have in mind that a key is only send after 2 seconds have passed since it 
 Finally, this picture shows how does the Phase One looks once its soldered. (Sorry for the bad image quality, the bad lighting
 and the excessive image processing the phone did, messed it up)
 
+The paper covering the EPROM is used to protect data integrity, as they are erased with ultra-violet light and 
+in some cases data gets corrupted even with normal lighting.
+
 ![ScreenShot](PhaseOne.jpg)
