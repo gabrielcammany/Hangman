@@ -23,7 +23,7 @@ A visual idea of how the project works is shown below
 
 ![Screenshot](GeneralDiagram.PNG)
 
-Although each phase is better explained in their following folders, here is an image of how all of them are connected.
+Although each phase is better explained in their respective folders, here is an image of how all of them are connected.
 
 * __Left__ - Phase One
 * __Bottom__ - Phase Three
