@@ -2,8 +2,6 @@
 
 Finally, the main objective of this phase is to display the current game through a VGA connector. 
 
-![ScreenShot](images/diagram.jpg)
-
 ## Display States
 The following image shows the different states of the game.
 
