@@ -7,6 +7,7 @@ The visual part of the game, will consist of two blocks
 
 ### LEDs ###
 Eight LEDs will show the letters that have been guessed or are still unknown, so when the LED is on, the player hasn't guess it and when it's off, the user has guess it correctlly.
+
 ![ScreenShot](images/LEDsLogic.PNG)
 
 ### 16 Segment ###
