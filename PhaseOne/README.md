@@ -3,7 +3,7 @@
 The main objective in this phase is to interact with the user and communicate with the next phase in order to process the 
 game logic.
 
-![ScreenShot](images/diagram.jpg)
+![ScreenShot](images/Diagram.jpg)
 
 ## Time Diagram
 The time diagram of the signals both generated or recieved, is shown below
