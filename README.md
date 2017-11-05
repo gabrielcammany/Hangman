@@ -23,6 +23,17 @@ A visual idea of how the project works is shown below
 
 ![Screenshot](GeneralDiagram.PNG)
 
+## Videos and Photos
+
+### Win
+[![Alt text](https://img.youtube.com/vi/Zs5C3KJokHA/0.jpg)](https://www.youtube.com/watch?v=Zs5C3KJokHA)
+
+### Won state
+[![Alt text](https://img.youtube.com/vi/ccOJZRLwsE8/0.jpg)](https://www.youtube.com/watch?v=ccOJZRLwsE8)
+
+### Lost
+[![Alt text](https://img.youtube.com/vi/f26fvJMAjE8/0.jpg)](https://www.youtube.com/watch?v=f26fvJMAjE8)
+
 Although each phase is better explained in their respective folders, here is an image of how all of them are connected.
 
 * __Left__ - Phase One
