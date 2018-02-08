@@ -1,7 +1,6 @@
 # Phase One #
 
-The main objective in this phase is to interact with the user and communicate with the next phase in order to process the 
-game logic.
+Phase one main objectives are the interaction with the user and the communication with the phase two to process the game logic.
 
 ![ScreenShot](images/Diagram.jpg)
 
@@ -29,16 +28,16 @@ Also, have in mind that a key is only send after 2 seconds have passed since it 
   * 74LS161 - Synchronous 4-bit counter
  * Ne555 oscillator
 
-### Electric Shema
+### Electric Scheme
 
 ![ScreenShot](ElectricSchemeProteus/Phase1.BMP)
 
 ## Board
 
 Finally, this picture shows how does the Phase One looks once its soldered. (Sorry for the bad image quality, the bad lighting
-and the excessive image processing the phone did, messed it up)
+and the excessive image processing of the phone camera, messed it up)
 
-The paper covering the EPROM is used to protect data integrity, as they are erased with ultra-violet light and 
+The sticker covering the EPROM is used to protect data integrity, as they are erased with ultra-violet light and 
 in some cases, data gets corrupted even with normal lighting.
 
 ![ScreenShot](images/PhaseOne.jpg)
